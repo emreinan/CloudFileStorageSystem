@@ -1,9 +1,45 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35521.163 d17.12
+VisualStudioVersion = 17.12.35521.163
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthenticationAPI", "AuthenticationAPI\AuthenticationAPI.csproj", "{34C55A61-F5B2-4556-BDD4-CD2B5237A724}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileMetadataAPI", "FileMetadataAPI\FileMetadataAPI.csproj", "{F30562AC-31FB-4FF0-A2CB-6EA244B74EE8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileStorageAPI", "FileStorageAPI\FileStorageAPI.csproj", "{886EECF7-DDD5-4B68-9D34-4D3DB38DE9AF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GatewayAPI", "GatewayAPI\GatewayAPI.csproj", "{F974C7F8-4AB2-401F-AD20-32418F170BC7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudFileStorageMVC", "CloudFileStorageMVC\CloudFileStorageMVC.csproj", "{E0A3BF28-C9E8-41C6-BA0B-183EC48B0617}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{34C55A61-F5B2-4556-BDD4-CD2B5237A724}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34C55A61-F5B2-4556-BDD4-CD2B5237A724}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34C55A61-F5B2-4556-BDD4-CD2B5237A724}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34C55A61-F5B2-4556-BDD4-CD2B5237A724}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F30562AC-31FB-4FF0-A2CB-6EA244B74EE8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F30562AC-31FB-4FF0-A2CB-6EA244B74EE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F30562AC-31FB-4FF0-A2CB-6EA244B74EE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F30562AC-31FB-4FF0-A2CB-6EA244B74EE8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{886EECF7-DDD5-4B68-9D34-4D3DB38DE9AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{886EECF7-DDD5-4B68-9D34-4D3DB38DE9AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{886EECF7-DDD5-4B68-9D34-4D3DB38DE9AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{886EECF7-DDD5-4B68-9D34-4D3DB38DE9AF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F974C7F8-4AB2-401F-AD20-32418F170BC7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F974C7F8-4AB2-401F-AD20-32418F170BC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F974C7F8-4AB2-401F-AD20-32418F170BC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F974C7F8-4AB2-401F-AD20-32418F170BC7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E0A3BF28-C9E8-41C6-BA0B-183EC48B0617}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E0A3BF28-C9E8-41C6-BA0B-183EC48B0617}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E0A3BF28-C9E8-41C6-BA0B-183EC48B0617}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E0A3BF28-C9E8-41C6-BA0B-183EC48B0617}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
