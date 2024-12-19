@@ -1,4 +1,4 @@
-﻿namespace FileMetadataAPI.Entities;
+﻿namespace FileMetadataAPI.Domain.Entities;
 
 public class File
 {
@@ -7,4 +7,6 @@ public class File
     public string Name { get; set; }
     public string Description { get; set; }
     public DateTime UploadDate { get; set; }
+
+    public ICollection<FileShare> FileShares { get; set; }
 }
