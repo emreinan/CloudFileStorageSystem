@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace AuthenticationAPI.Infrastructure.Configurations;
+namespace AuthenticationAPI.Persistence.Configurations;
 
 public class UserConfiguration : IEntityTypeConfiguration<User>
 {
@@ -17,6 +17,5 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         builder.Property(u => u.Role).IsRequired().HasMaxLength(50);
 
         builder.HasIndex(u => u.Email).IsUnique();
-        
     }
 }
