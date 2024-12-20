@@ -1,4 +1,4 @@
-﻿using AuthenticationAPI.Infrastructure.Context;
+﻿using AuthenticationAPI.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
 
 namespace AuthenticationAPI;

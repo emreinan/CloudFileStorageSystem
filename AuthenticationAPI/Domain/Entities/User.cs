@@ -1,4 +1,6 @@
-﻿namespace AuthenticationAPI.Domain.Entities
+﻿using AuthenticationAPI.Domain.Enums;
+
+namespace AuthenticationAPI.Domain.Entities
 {
     public class User
     {
@@ -7,6 +9,8 @@
         public string Email { get; set; }
         public string PasswordHash { get; set; }
         public string PasswordSalt { get; set; }
-        public string Role { get; set; }
+        public Role Role { get; set; }
+
+        public virtual ICollection<RefreshToken> RefreshTokens { get; set; } = default!;
     }
 }
