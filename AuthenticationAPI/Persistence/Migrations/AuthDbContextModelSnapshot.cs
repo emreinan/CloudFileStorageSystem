@@ -7,10 +7,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace AuthenticationAPI.Infrastructure.Migrations
+namespace AuthenticationAPI.Persistence.Migrations
 {
-    [DbContext(typeof(AuthenticationDbContext))]
-    partial class AuthenticationDbContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(AuthDbContext))]
+    partial class AuthDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
@@ -65,13 +65,13 @@ namespace AuthenticationAPI.Infrastructure.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("PasswordHash")
+                    b.Property<byte[]>("PasswordHash")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("BLOB");
 
-                    b.Property<string>("PasswordSalt")
+                    b.Property<byte[]>("PasswordSalt")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("BLOB");
 
                     b.Property<int>("Role")
                         .HasMaxLength(50)
@@ -83,6 +83,17 @@ namespace AuthenticationAPI.Infrastructure.Migrations
                         .IsUnique();
 
                     b.ToTable("Users", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Email = "admin@admin.com",
+                            Name = "Admin",
+                            PasswordHash = new byte[] { 120, 44, 74, 2, 21, 231, 179, 21, 157, 246, 206, 184, 42, 212, 125, 89, 168, 174, 77, 186, 87, 47, 247, 206, 147, 207, 2, 136, 250, 85, 211, 131, 181, 243, 164, 41, 233, 227, 108, 174, 217, 201, 141, 158, 70, 216, 170, 39, 106, 242, 134, 253, 241, 205, 12, 200, 187, 29, 145, 127, 244, 68, 178, 189 },
+                            PasswordSalt = new byte[] { 12, 131, 51, 131, 120, 95, 244, 185, 159, 95, 164, 255, 100, 141, 232, 6, 186, 109, 116, 189, 14, 155, 237, 183, 98, 15, 93, 228, 241, 205, 229, 121, 80, 145, 126, 237, 170, 205, 167, 112, 69, 219, 116, 168, 227, 240, 188, 229, 219, 122, 26, 106, 25, 83, 141, 166, 180, 198, 94, 29, 16, 42, 51, 90, 19, 241, 122, 183, 48, 42, 254, 36, 58, 119, 113, 2, 18, 25, 111, 220, 235, 224, 35, 63, 213, 1, 35, 172, 6, 224, 194, 137, 196, 180, 8, 1, 119, 119, 83, 124, 139, 35, 250, 254, 101, 52, 186, 242, 190, 241, 241, 159, 86, 189, 7, 197, 80, 90, 192, 89, 8, 145, 26, 62, 99, 175, 162, 89 },
+                            Role = 1
+                        });
                 });
 
             modelBuilder.Entity("AuthenticationAPI.Domain.Entities.RefreshToken", b =>
