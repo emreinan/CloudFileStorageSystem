@@ -1,4 +1,5 @@
 ﻿using AuthenticationAPI.Application.Features.Auth.Commands.Login;
+using AuthenticationAPI.Application.Features.Auth.Commands.RefreshToken;
 using AuthenticationAPI.Application.Features.Auth.Commands.Register;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -26,6 +27,20 @@ public class AuthController(IMediator mediator) : ControllerBase
 
     [HttpPost("login")]
     public async Task<IActionResult> Login([FromBody] LoginCommand command)
+    {
+        try
+        {
+            var result = await mediator.Send(command);
+            return Ok(result);
+        }
+        catch (Exception ex)
+        {
+            return Unauthorized(ex.Message);
+        }
+    }
+
+    [HttpPost("refresh")]
+    public async Task<IActionResult> Refresh([FromBody] RefreshTokenCommand command)
     {
         try
         {

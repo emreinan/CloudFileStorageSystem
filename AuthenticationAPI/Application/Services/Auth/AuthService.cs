@@ -54,6 +54,7 @@ public class AuthService(IConfiguration configuration, AuthDbContext authDb) : I
         };
 
         await authDb.RefreshTokens.AddAsync(newRefreshToken);
+        await authDb.SaveChangesAsync();
         return newRefreshToken;
     }
 
