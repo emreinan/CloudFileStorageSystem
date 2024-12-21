@@ -3,10 +3,13 @@ using AuthenticationAPI.Application.Services.Auth;
 using AuthenticationAPI.Persistence.Context;
 using FluentValidation.AspNetCore;
 using FluentValidation;
-using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
+using AuthenticationAPI.Application.Jwt;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace AuthenticationAPI;
 
@@ -24,12 +27,34 @@ public static class AuthenticationAPIRegistrationServices
         {
             configuration.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
         });
+        AddJwtAuthentication(services, configuration);
         AddSwaggerGen(services);
 
         services.AddFluentValidationAutoValidation();
         services.AddValidatorsFromAssembly(Assembly.Load(nameof(AuthenticationAPI)));
 
         return services;
+    }
+
+    private static void AddJwtAuthentication(IServiceCollection services, IConfiguration configuration)
+    {
+        TokenOptions tokenOptions = configuration.GetSection("TokenOptions").Get<TokenOptions>()
+                    ?? throw new InvalidOperationException("TokenOptions cant found in configuration");
+
+        services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+           .AddJwtBearer(options =>
+           {
+               options.TokenValidationParameters = new TokenValidationParameters
+               {
+                   ValidateIssuer = true,
+                   ValidateAudience = true,
+                   ValidateLifetime = true,
+                   ValidIssuer = tokenOptions.Issuer,
+                   ValidAudience = tokenOptions.Audience,
+                   ValidateIssuerSigningKey = true,
+                   IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(tokenOptions.SecurityKey))
+               };
+           });
     }
 
     private static void AddSwaggerGen(IServiceCollection services)
