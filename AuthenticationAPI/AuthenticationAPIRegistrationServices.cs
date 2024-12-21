@@ -1,6 +1,8 @@
 ﻿using AuthenticationAPI.Application.Features.Auth.Rules;
 using AuthenticationAPI.Application.Services.Auth;
 using AuthenticationAPI.Persistence.Context;
+using FluentValidation.AspNetCore;
+using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
@@ -23,6 +25,9 @@ public static class AuthenticationAPIRegistrationServices
             configuration.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
         });
         AddSwaggerGen(services);
+
+        services.AddFluentValidationAutoValidation();
+        services.AddValidatorsFromAssembly(Assembly.Load(nameof(AuthenticationAPI)));
 
         return services;
     }
