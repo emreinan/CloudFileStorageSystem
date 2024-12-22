@@ -1,4 +1,5 @@
-﻿using FileStorageAPI.Application.Features.Commands.Download;
+﻿using FileStorageAPI.Application.Features.Commands.Delete;
+using FileStorageAPI.Application.Features.Commands.Download;
 using FileStorageAPI.Application.Features.Commands.Upload;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -29,6 +30,20 @@ public class FileStorageController(IMediator mediator) : ControllerBase
         }
 
         return File(result.Stream, result.ContentType, result.FileName);
+    }
+
+    [HttpDelete("delete")]
+    public async Task<IActionResult> Delete([FromQuery] DeleteFileDto deleteFileDto)
+    {
+        var command = new DeleteFileCommand { Delete = deleteFileDto };
+        var result = await mediator.Send(command);
+
+        if (!result)
+        {
+            return NotFound("File not found.");
+        }
+
+        return NoContent();
     }
 
 }
