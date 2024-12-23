@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AuthenticationAPI.Application.Features.Auth.Constants;
 
-internal static class ErrorMessages
+internal static class AuthErrorMessages
 {
     internal const string UserNotFound = "User not found.";
     internal const string InvalidPassword = "Invalid password";
