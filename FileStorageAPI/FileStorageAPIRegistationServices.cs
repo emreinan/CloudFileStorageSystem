@@ -1,5 +1,7 @@
 ﻿using FileStorageAPI.Application.Features.Rules;
 using FileStorageAPI.Application.Jwt;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -16,6 +18,9 @@ public static class FileStorageAPIRegistationServices
         {
             configuration.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
         });
+
+        services.AddFluentValidationAutoValidation();
+        services.AddValidatorsFromAssembly(Assembly.Load(nameof(FileStorageAPI)));
 
         services.AddHttpContextAccessor();
         services.AddScoped<FileStorageBusinessRules>();
