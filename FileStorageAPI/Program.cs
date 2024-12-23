@@ -1,4 +1,5 @@
 using FileStorageAPI;
+using FileStorageAPI.Application.Exceptions.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +16,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.ConfigureCustomExceptionMiddleware();
 app.UseStaticFiles();
 app.UseHttpsRedirection();
 
