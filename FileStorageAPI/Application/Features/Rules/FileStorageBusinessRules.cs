@@ -1,5 +1,5 @@
-﻿using AuthenticationAPI.Application.Features.Auth.Constants;
-using FileStorageAPI.Application.Exceptions.Types;
+﻿using FileStorageAPI.Application.Exceptions.Types;
+using FileStorageAPI.Application.Features.Constants;
 using System.Security.Claims;
 
 namespace FileStorageAPI.Application.Features.Rules;

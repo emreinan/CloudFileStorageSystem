@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AuthenticationAPI.Application.Features.Auth.Constants;
+namespace FileStorageAPI.Application.Features.Constants;
 
 internal static class FileStorageErrorMessages
 {
