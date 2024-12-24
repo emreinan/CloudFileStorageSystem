@@ -3,9 +3,7 @@ using FileStorageAPI.Application.Features.Commands.Download;
 using FileStorageAPI.Application.Features.Commands.Upload;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 
 namespace FileStorageAPI.Controllers;
 
@@ -35,9 +33,14 @@ public class FileStorageController(IMediator mediator) : ControllerBase
         return File(result.Stream, result.ContentType, result.FileName);
     }
 
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpDelete("delete/{FileName}")]
     public async Task<IActionResult> Delete([FromRoute] DeleteFileDto deleteFileDto)
     {
+        if (!Request.Headers.TryGetValue("x-source", out var source) || source != "FileMetadataAPI")
+        {
+            return Forbid("Unauthorized source");
+        }
         var command = new DeleteFileCommand { Delete = deleteFileDto };
         var result = await mediator.Send(command);
 

@@ -25,6 +25,7 @@ public static class FileMetadataApıRegisterServices
         {
             string apiUrl = configuration["FileStorageApiUrl"] ?? throw new InvalidOperationException();
             client.BaseAddress = new Uri(apiUrl);
+            client.DefaultRequestHeaders.Add("x-source", "FileMetadataAPI");
         });
 
         services.AddMediatR(configuration =>
