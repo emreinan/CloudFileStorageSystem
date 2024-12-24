@@ -12,13 +12,22 @@ public static class FileMetadataApıRegisterServices
         services.AddDbContext<FileMetaDataDbContext>(options =>
             options.UseNpgsql(configuration.GetConnectionString("FileMetadataDb")));
 
+        services.AddAutoMapper(Assembly.GetExecutingAssembly());
+        services.AddScoped<FileBusinessRules>();
+        services.AddHttpContextAccessor();
+
+        services.AddHttpClient("FileStorageApiClient", client =>
+        {
+            string apiUrl = configuration["FileStorageApiUrl"] ?? throw new InvalidOperationException();
+            client.BaseAddress = new Uri(apiUrl);
+        });
+
         services.AddMediatR(configuration =>
         {
             configuration.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
         });
 
-        services.AddAutoMapper(Assembly.GetExecutingAssembly());
-        services.AddScoped<FileBusinessRules>();
+        
 
         return services;
     }

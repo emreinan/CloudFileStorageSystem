@@ -20,7 +20,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Application\Features\Commands\" />
     <Folder Include="Application\Features\Constans\" />
   </ItemGroup>
 
