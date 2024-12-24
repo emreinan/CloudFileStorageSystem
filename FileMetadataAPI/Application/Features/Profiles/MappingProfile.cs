@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FileMetadataAPI.Application.Features.Commands.Add;
 using FileMetadataAPI.Application.Features.Queries.GetById;
 using FileMetadataAPI.Application.Features.Queries.GetList;
 using File = FileMetadataAPI.Domain.Entities.File;
@@ -11,6 +12,10 @@ public class MappingProfile : Profile
     {
         CreateMap<File, GetListFileQueryDto>();
         CreateMap<File, GetByIdFileQueryDto>();
+
+        CreateMap<AddFileMetadataCommand, File>();
+        CreateMap<File, AddFileMetadataResponse>();
+
 
     }
 }

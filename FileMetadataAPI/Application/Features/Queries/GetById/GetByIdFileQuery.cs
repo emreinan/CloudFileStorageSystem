@@ -14,7 +14,7 @@ public class GetByIdFileQuery : IRequest<GetByIdFileQueryDto>
         public async Task<GetByIdFileQueryDto> Handle(GetByIdFileQuery request, CancellationToken cancellationToken)
         {
             var file = await fileMetaDataDbContext.Files.FindAsync(request.Id);
-            await fileBusinessRules.FileIsExists(file);
+            fileBusinessRules.FileIsExists(file);
             return mapper.Map<GetByIdFileQueryDto>(file);
         }
     }

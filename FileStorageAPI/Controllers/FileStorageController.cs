@@ -21,8 +21,8 @@ public class FileStorageController(IMediator mediator) : ControllerBase
         var result = await mediator.Send(command);
         return Ok(result);
     }
-    [HttpGet("download")]
-    public async Task<IActionResult> Download([FromQuery] DownloadFileDto downloadFileDto)
+    [HttpGet("download/{FileName}")]
+    public async Task<IActionResult> Download([FromRoute] DownloadFileDto downloadFileDto)
     {
         var command = new DownloadFileCommand { Download = downloadFileDto };
         var result = await mediator.Send(command);
@@ -35,8 +35,8 @@ public class FileStorageController(IMediator mediator) : ControllerBase
         return File(result.Stream, result.ContentType, result.FileName);
     }
 
-    [HttpDelete("delete")]
-    public async Task<IActionResult> Delete([FromQuery] DeleteFileDto deleteFileDto)
+    [HttpDelete("delete/{FileName}")]
+    public async Task<IActionResult> Delete([FromRoute] DeleteFileDto deleteFileDto)
     {
         var command = new DeleteFileCommand { Delete = deleteFileDto };
         var result = await mediator.Send(command);
