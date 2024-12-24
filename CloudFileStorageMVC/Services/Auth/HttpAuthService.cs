@@ -1,4 +1,5 @@
 ﻿using CloudFileStorageMVC.Dtos.Auth;
+using CloudFileStorageMVC.Util.ExceptionHandling;
 using System.Net.Http.Json;
 
 namespace CloudFileStorageMVC.Services.Auth;

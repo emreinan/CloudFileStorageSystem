@@ -16,6 +16,9 @@ namespace GatewayAPI
         }
         private static void AddJwtAuthentication(IServiceCollection services, IConfiguration configuration)
         {
+            TokenOptions tokenOptions = configuration.GetSection("TokenOptions").Get<TokenOptions>()
+                    ?? throw new InvalidOperationException("TokenOptions cant found in configuration");
+
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                .AddJwtBearer(options =>
                {
@@ -24,10 +27,10 @@ namespace GatewayAPI
                        ValidateIssuer = true,
                        ValidateAudience = true,
                        ValidateLifetime = true,
-                       ValidIssuer = configuration["TokenOptions:Issuer"],
-                       ValidAudience = configuration["TokenOptions:Audience"],
+                       ValidIssuer = tokenOptions.Issuer,
+                       ValidAudience = tokenOptions.Audience,
                        ValidateIssuerSigningKey = true,
-                       IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["TokenOptions:SecurityKey"]))
+                       IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(tokenOptions.SecurityKey))
                    };
                });
         }

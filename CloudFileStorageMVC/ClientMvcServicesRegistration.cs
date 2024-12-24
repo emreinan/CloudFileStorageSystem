@@ -93,6 +93,12 @@ namespace CloudFileStorageMVC
                 string apiUrl = configuration["GatewayApiUrl"] ?? throw new InvalidOperationException("GatewayApi URL is missing");
                 client.BaseAddress = new Uri(apiUrl);
             });
+
+            services.AddHttpClient("AuthApiClient", client =>
+            {
+                string apiUrl = configuration["AuthApiUrl"] ?? throw new InvalidOperationException("AuthApi URL is missing");
+                client.BaseAddress = new Uri(apiUrl);
+            });
         }
     }
 }
