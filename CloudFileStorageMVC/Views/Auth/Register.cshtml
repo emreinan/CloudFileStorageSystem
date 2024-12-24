@@ -1,0 +1,32 @@
+﻿@model RegisterViewModel
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+<div class="d-flex justify-content-center mt-5">
+    <div class="card shadow w-25">
+        <div class="card-body">
+            <h2 class="card-title text-center mb-4">Register</h2>
+            <form asp-action="Register" method="post" class="needs-validation" novalidate>
+                <div class="mb-3">
+                    <label asp-for="Name" class="form-label">Name</label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Email" class="form-label">Email</label>
+                    <input asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Password" class="form-label">Password</label>
+                    <input asp-for="Password" class="form-control" type="password" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+                <button type="submit" class="btn btn-primary w-100 mb-2">Register</button>
+                <a asp-action="Login" class="btn btn-link w-100 text-center">Already have an account? Login</a>
+            </form>
+        </div>
+    </div>
+</div>
