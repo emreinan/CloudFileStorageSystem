@@ -1,5 +1,7 @@
 ﻿using FileMetadataAPI.Application.Features.Rules;
 using FileMetadataAPI.Infrastructure.Context;
+using FluentValidation.AspNetCore;
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
@@ -15,6 +17,9 @@ public static class FileMetadataApıRegisterServices
         services.AddAutoMapper(Assembly.GetExecutingAssembly());
         services.AddScoped<FileBusinessRules>();
         services.AddHttpContextAccessor();
+
+        services.AddFluentValidationAutoValidation();
+        services.AddValidatorsFromAssembly(Assembly.Load(nameof(FileMetadataAPI)));
 
         services.AddHttpClient("FileStorageApiClient", client =>
         {

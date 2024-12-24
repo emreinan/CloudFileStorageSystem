@@ -3,7 +3,7 @@ using File= FileMetadataAPI.Domain.Entities.File;
 
 namespace FileMetadataAPI.Application.Features.Rules;
 
-public class FileBusinessRules(FileMetaDataDbContext fileMetaDataDbContext)
+public class FileBusinessRules
 {
     public void FileIsExists(File? file)
     {
