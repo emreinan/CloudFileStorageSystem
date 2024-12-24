@@ -10,5 +10,6 @@ internal static class FileStorageErrorMessages
 {
     internal const string UserNotFound = "User not found.";
     internal const string UserNotAuthorized = "User not authorized.";
+    internal const string FileAlreadyExists = "File already exists.";
 
 }

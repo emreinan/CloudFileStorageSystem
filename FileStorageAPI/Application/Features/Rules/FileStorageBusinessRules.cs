@@ -15,4 +15,18 @@ public class FileStorageBusinessRules(IHttpContextAccessor httpContextAccessor)
         }
         return int.Parse(userIdClaim.Value);
     }
+    public void UploadPathIsExists(string uploadPath)
+    {
+        if (!Directory.Exists(uploadPath))
+        {
+            Directory.CreateDirectory(uploadPath);
+        }
+    }
+    public void FileIsExists(string filePath)
+    {
+        if (File.Exists(filePath))
+        {
+            throw new BusinessException(FileStorageErrorMessages.FileAlreadyExists);
+        }
+    }
 }

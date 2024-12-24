@@ -20,12 +20,11 @@ public class UploadFileCommand : IRequest<FileStorageResult>
             var userId = fileStorageBusinessRules.GetUserIdClaim();
             var file = request.Upload.File;
 
-            if (!Directory.Exists(UploadPath))
-            {
-                Directory.CreateDirectory(UploadPath);
-            }
+            fileStorageBusinessRules.UploadPathIsExists(UploadPath);
 
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), UploadPath, file.FileName);
+            fileStorageBusinessRules.FileIsExists(filePath);
+
             using (var stream = new FileStream(filePath, FileMode.Create))
             {
                 await file.CopyToAsync(stream, cancellationToken);
