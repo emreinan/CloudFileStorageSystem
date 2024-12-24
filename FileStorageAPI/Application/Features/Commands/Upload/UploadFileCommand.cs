@@ -6,14 +6,15 @@ namespace FileStorageAPI.Application.Features.Commands.Upload;
 
 public class UploadFileCommand : IRequest<FileStorageResult>
 {
-
     public UploadFileDto Upload { get; set; }
 
     internal class UploadFileCommandHandler(
-        FileStorageBusinessRules fileStorageBusinessRules
+        FileStorageBusinessRules fileStorageBusinessRules,
+        IHttpClientFactory httpClientFactory
         ) : IRequestHandler<UploadFileCommand, FileStorageResult>
     {
         private const string UploadPath = "wwwroot/uploads";
+        private readonly HttpClient httpClient = httpClientFactory.CreateClient("FileMetadataApiClient");
         public async Task<FileStorageResult> Handle(UploadFileCommand request, CancellationToken cancellationToken)
         {
             var userId = fileStorageBusinessRules.GetUserIdClaim();
@@ -29,6 +30,17 @@ public class UploadFileCommand : IRequest<FileStorageResult>
             {
                 await file.CopyToAsync(stream, cancellationToken);
             }
+
+            var fileMetadata = new AddFileMetadataRequest
+            {
+                Name = file.FileName,
+                Description = request.Upload.Description,
+                UploadDate = DateTime.UtcNow,
+                OwnerId = userId
+            };
+
+            var response = await httpClient.PostAsJsonAsync("api/FileMetadata", fileMetadata, cancellationToken);
+            response.EnsureSuccessStatusCode();
 
             return new FileStorageResult
             {

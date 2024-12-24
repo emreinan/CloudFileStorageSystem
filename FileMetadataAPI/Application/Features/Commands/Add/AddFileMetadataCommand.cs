@@ -21,7 +21,7 @@ public class AddFileMetadataCommand : IRequest<AddFileMetadataResponse>
         {
             var entity = mapper.Map<File>(request);
             await dbContext.Files.AddAsync(entity);
-            await dbContext.SaveChangesAsync(cancellationToken);
+            await dbContext.SaveChangesAsync();
             return mapper.Map<AddFileMetadataResponse>(entity);
         }
     }

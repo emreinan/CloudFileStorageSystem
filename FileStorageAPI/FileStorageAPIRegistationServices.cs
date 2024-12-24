@@ -25,6 +25,13 @@ public static class FileStorageAPIRegistationServices
         services.AddHttpContextAccessor();
         services.AddScoped<FileStorageBusinessRules>();
 
+        services.AddHttpClient("FileMetadataApiClient", client =>
+        {
+            string apiUrl = configuration["FileMetadataAPIurl"] ?? throw new InvalidOperationException();
+            client.BaseAddress = new Uri(apiUrl);
+            client.DefaultRequestHeaders.Add("x-source", "FileStorageAPI");
+        });
+
         AddJwtAuthentication(services, configuration);
         AddSwaggerGen(services);
 

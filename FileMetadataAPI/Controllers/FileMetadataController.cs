@@ -28,9 +28,14 @@ namespace FileMetadataAPI.Controllers
         }
 
         [HttpPost]
-        //[ApiExplorerSettings(IgnoreApi = true)] // Swagger will ignore this endpoint
+        [ApiExplorerSettings(IgnoreApi = true)] // Swagger will ignore this endpoint
         public async Task<IActionResult> AddFile([FromBody] AddFileMetadataCommand command)
         {
+            // Yanlızca FileStorageAPI tarafından istek yapılabilsin, elle veri eklenemesin
+            if (!Request.Headers.TryGetValue("x-source", out var source) || source != "FileStorageAPI")
+            {
+                return Forbid("Unauthorized source");
+            }
             var result = await mediator.Send(command);
             return CreatedAtAction(nameof(GetFileById), new { id = result.Id }, result);
         }
