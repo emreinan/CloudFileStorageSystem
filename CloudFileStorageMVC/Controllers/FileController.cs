@@ -2,20 +2,17 @@
 using CloudFileStorageMVC.Services.Token;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json.Linq;
 using System.Net.Http.Headers;
 using System.Security.Claims;
 
 namespace CloudFileStorageMVC.Controllers;
 
 [Authorize]
-public class FileController(IHttpClientFactory httpClientFactory,ITokenService tokenService) : Controller
+public class FileController(IHttpClientFactory httpClientFactory,ITokenService tokenService) : BaseController(tokenService, httpClientFactory)
 {
-    private readonly HttpClient httpClient = httpClientFactory.CreateClient("GetewayApiClient");
-
     public async Task<IActionResult> Files()
     {
-        var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+        var userId = GetUserId();
         var endpoint = User.IsInRole("Admin") ? "/api/FileMetadata" : $"/api/FileMetadata/{userId}";
 
         var response = await httpClient.GetAsync(endpoint);
@@ -48,9 +45,7 @@ public class FileController(IHttpClientFactory httpClientFactory,ITokenService t
             return View(model);
         }
 
-        var token = tokenService.GetAccessToken();
-        httpClient.DefaultRequestHeaders.Authorization =
-        new AuthenticationHeaderValue("Bearer", token);
+        GatewayClientGetToken();
 
         using var content = new MultipartFormDataContent();
         content.Add(new StringContent(model.Description), "Description");
