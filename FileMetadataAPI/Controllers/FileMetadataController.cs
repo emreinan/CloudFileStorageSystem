@@ -28,7 +28,7 @@ namespace FileMetadataAPI.Controllers
         }
 
         [HttpPost]
-        [ApiExplorerSettings(IgnoreApi = true)] // Swagger will ignore this endpoint
+        [ApiExplorerSettings(IgnoreApi = true)] // Swagger'da action gözükmesin
         public async Task<IActionResult> AddFile([FromBody] AddFileMetadataCommand command)
         {
             // Yanlızca FileStorageAPI tarafından istek yapılabilsin, elle veri eklenemesin
@@ -41,7 +41,7 @@ namespace FileMetadataAPI.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateFile(int id, [FromBody] UpdateFileMetadataRequest request)
+        public async Task<IActionResult> UpdateFile([FromRoute]int id, [FromBody] UpdateFileMetadataRequest request)
         {
             await mediator.Send(new UpdateFileMetadataCommand { Id = id, Request = request });
             return NoContent();

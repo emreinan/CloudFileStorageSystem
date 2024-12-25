@@ -2,9 +2,9 @@
 
 namespace FileStorageAPI.Application.Features.Commands.Upload;
 
-public class LoginCommandValidator : AbstractValidator<UploadFileDto>
+public class UploadFileCommandValidator : AbstractValidator<UploadFileDto>
 {
-    public LoginCommandValidator()
+    public UploadFileCommandValidator()
     {
         RuleFor(x => x.File)
             .NotNull().WithMessage("File is required.")
