@@ -6,4 +6,5 @@ public class AddFileMetadataRequest
     public string Name { get; set; }
     public string Description { get; set; }
     public DateTime UploadDate { get; set; }
+    public string Permission { get; set; }
 }

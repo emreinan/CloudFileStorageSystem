@@ -11,7 +11,7 @@ public class FileShareConfiguration : IEntityTypeConfiguration<FileShare>
     {
         builder.ToTable("FileShares");
         builder.HasKey(fs => new { fs.FileId, fs.UserId });
-        builder.Property(fs => fs.Permission).IsRequired().HasMaxLength(50);
+        builder.Property(fs => fs.Permission).IsRequired().HasConversion<string>(); // Enum'u int yerine string olarak saklar, daha anlamlı.
 
         builder.HasOne<File>()
             .WithMany()

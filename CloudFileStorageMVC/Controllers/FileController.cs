@@ -1,12 +1,15 @@
 ﻿using CloudFileStorageMVC.Models;
+using CloudFileStorageMVC.Services.Token;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
+using System.Net.Http.Headers;
 using System.Security.Claims;
 
 namespace CloudFileStorageMVC.Controllers;
 
 [Authorize]
-public class FileController(IHttpClientFactory httpClientFactory) : Controller
+public class FileController(IHttpClientFactory httpClientFactory,ITokenService tokenService) : Controller
 {
     private readonly HttpClient httpClient = httpClientFactory.CreateClient("GetewayApiClient");
 
@@ -45,9 +48,13 @@ public class FileController(IHttpClientFactory httpClientFactory) : Controller
             return View(model);
         }
 
+        var token = tokenService.GetAccessToken();
+        httpClient.DefaultRequestHeaders.Authorization =
+        new AuthenticationHeaderValue("Bearer", token);
+
         using var content = new MultipartFormDataContent();
         content.Add(new StringContent(model.Description), "Description");
-        content.Add(new StringContent(model.Permission.ToString()), "permission");
+        content.Add(new StringContent(model.Permission), "Permission");
         content.Add(new StreamContent(file.OpenReadStream()), "File", file.FileName);
 
         var response = await httpClient.PostAsync("/api/FileStorage/upload", content);

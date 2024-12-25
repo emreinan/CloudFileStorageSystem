@@ -1,4 +1,4 @@
-﻿namespace CloudFileStorageMVC.Models.Enums;
+﻿namespace FileMetadataAPI.Domain.Enums;
 
 public enum Permission
 {

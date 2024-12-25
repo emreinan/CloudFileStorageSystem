@@ -57,6 +57,8 @@ public static class FileStorageAPIRegistationServices
                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(tokenOptions.SecurityKey))
                };
            });
+
+        services.AddAuthorization();
     }
 
     private static void AddSwaggerGen(IServiceCollection services)

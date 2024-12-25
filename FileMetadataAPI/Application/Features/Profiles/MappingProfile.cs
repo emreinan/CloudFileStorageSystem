@@ -13,7 +13,9 @@ public class MappingProfile : Profile
         CreateMap<File, GetListFileQueryDto>();
         CreateMap<File, GetByIdFileQueryDto>();
 
-        CreateMap<AddFileMetadataCommand, File>();
+        CreateMap<AddFileMetadataCommand, File>()
+        .ForSourceMember(src => src.Permission, opt => opt.DoNotValidate());
+
         CreateMap<File, AddFileMetadataResponse>();
 
 
