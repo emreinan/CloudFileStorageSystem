@@ -2,13 +2,11 @@
 using CloudFileStorageMVC.Services.Token;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Net.Http.Headers;
-using System.Security.Claims;
 
 namespace CloudFileStorageMVC.Controllers;
 
 [Authorize]
-public class FileController(IHttpClientFactory httpClientFactory,ITokenService tokenService) : BaseController(tokenService, httpClientFactory)
+public class FileController(IHttpClientFactory httpClientFactory, ITokenService tokenService) : BaseController(tokenService, httpClientFactory)
 {
     public async Task<IActionResult> Files()
     {
@@ -16,13 +14,13 @@ public class FileController(IHttpClientFactory httpClientFactory,ITokenService t
         var endpoint = User.IsInRole("Admin") ? "/api/FileMetadata" : $"/api/FileMetadata/{userId}";
 
         var response = await httpClient.GetAsync(endpoint);
-        if (response.IsSuccessStatusCode)
+        if (!response.IsSuccessStatusCode)
         {
-            var files = await response.Content.ReadFromJsonAsync<List<FileViewModel>>();
-            return View(files);
+            return View("Error");
         }
 
-        return View("Error");
+        var files = await response.Content.ReadFromJsonAsync<List<FileViewModel>>();
+        return View(files);
     }
 
     [HttpGet]
@@ -55,10 +53,12 @@ public class FileController(IHttpClientFactory httpClientFactory,ITokenService t
         var response = await httpClient.PostAsync("/api/FileStorage/upload", content);
         if (!response.IsSuccessStatusCode)
         {
-            return RedirectToAction("Files");
+            ModelState.AddModelError("", "An error occurred while uploading the file.");
+            return View();
         }
 
-        return View("Error");
+        TempData["SuccessMessage"] = "File uploaded successfully!";
+        return RedirectToAction("Files");
     }
 
     [Authorize]
@@ -68,10 +68,11 @@ public class FileController(IHttpClientFactory httpClientFactory,ITokenService t
         var response = await httpClient.GetAsync($"/api/FileMetadata/{id}");
         if (!response.IsSuccessStatusCode)
         {
-            return View("Error");
+            ModelState.AddModelError("", "An error occurred while uploading the file.");
+            return View();
         }
 
-        var file = await response.Content.ReadFromJsonAsync<FileViewModel>();
+        var file = await response.Content.ReadFromJsonAsync<FileRequestModel>();
         return View(file);
     }
 
@@ -86,9 +87,11 @@ public class FileController(IHttpClientFactory httpClientFactory,ITokenService t
         var response = await httpClient.PutAsJsonAsync($"/api/FileMetadata/{id}", model);
         if (!response.IsSuccessStatusCode)
         {
-            return View("Error");
+            ModelState.AddModelError("", "An error occurred while updating the file.");
+            return View(model);
         }
 
+        TempData["SuccessMessage"] = "File updated successfully!";
         return RedirectToAction(nameof(Files));
     }
 
@@ -98,9 +101,11 @@ public class FileController(IHttpClientFactory httpClientFactory,ITokenService t
         var response = await httpClient.DeleteAsync($"/api/FileMetadata/{id}");
         if (!response.IsSuccessStatusCode)
         {
-            return View("Error");
+            TempData["ErrorMessage"] = "An error occurred while deleting the file.";
+            return RedirectToAction("Files");
         }
 
+        TempData["SuccessMessage"] = "File deleted successfully!";
         return RedirectToAction("Files");
     }
 }

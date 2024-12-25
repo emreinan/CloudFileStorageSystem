@@ -19,13 +19,13 @@
 
         <div class="mb-3">
             <label class="form-label">Permission</label>
-            <div>
-                <input type="radio" asp-for="Permission" value="Public" class="form-check-input"/>
-                <label asp-for="Permission" class="form-check-label">Public</label>
+            <div class="mb-2">
+                <input type="radio" asp-for="Permission" value="Public" class="form-check-input" id="permissionPublic" />
+                <label for="permissionPublic" class="form-check-label">Public</label>
             </div>
             <div>
-                <input type="radio" asp-for="Permission" value="Private" class="form-check-input" />
-                <label asp-for="Permission" class="form-check-label">Private</label>
+                <input type="radio" asp-for="Permission" value="Private" class="form-check-input" id="permissionPrivate" />
+                <label for="permissionPrivate" class="form-check-label">Private</label>
             </div>
             <span asp-validation-for="Permission" class="text-danger"></span>
         </div>
