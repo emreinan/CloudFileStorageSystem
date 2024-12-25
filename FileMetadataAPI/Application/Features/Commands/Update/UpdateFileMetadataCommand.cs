@@ -19,7 +19,6 @@ public class UpdateFileMetadataCommand : IRequest
 
             fileBusinessRules.FileIsExists(file);
 
-            file!.Name = request.Request.Name;
             file.Description = request.Request.Description;
 
             await fileMetaDataDbContext.SaveChangesAsync(cancellationToken);
