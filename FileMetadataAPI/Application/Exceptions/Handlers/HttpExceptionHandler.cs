@@ -1,6 +1,6 @@
 ﻿using FileMetadataAPI.Application.Exceptions.Extensions;
+using FileMetadataAPI.Application.Exceptions.HttpProblemDetails;
 using FileMetadataAPI.Application.Exceptions.Types;
-using FileStorageAPI.Application.Exceptions.HttpProblemDetails;
 
 namespace FileMetadataAPI.Application.Exceptions.Handlers;
 

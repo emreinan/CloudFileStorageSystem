@@ -31,6 +31,16 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
                 PasswordHash = passwordHash,
                 PasswordSalt = passwordSalt,
                 Role = Role.Admin
-            });
+            },
+            new User
+            {
+                Id = 2,
+                Name = "User",
+                Email = "user@user.com",
+                PasswordHash = passwordHash,
+                PasswordSalt = passwordSalt,
+                Role = Role.User
+            }
+        );
     }
 }
