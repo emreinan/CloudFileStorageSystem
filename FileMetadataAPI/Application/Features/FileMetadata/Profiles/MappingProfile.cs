@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
-using FileMetadataAPI.Application.Features.Commands.Add;
-using FileMetadataAPI.Application.Features.Queries.GetById;
-using FileMetadataAPI.Application.Features.Queries.GetList;
+using FileMetadataAPI.Application.Features.FileMetadata.Commands.Add;
+using FileMetadataAPI.Application.Features.FileMetadata.Queries.GetById;
+using FileMetadataAPI.Application.Features.FileMetadata.Queries.GetList;
 using File = FileMetadataAPI.Domain.Entities.File;
 
-namespace FileMetadataAPI.Application.Features.Profiles;
+namespace FileMetadataAPI.Application.Features.FileMetadata.Profiles;
 
 public class MappingProfile : Profile
 {

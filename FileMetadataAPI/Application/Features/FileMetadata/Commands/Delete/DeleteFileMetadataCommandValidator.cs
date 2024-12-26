@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace FileMetadataAPI.Application.Features.Commands.Delete
+namespace FileMetadataAPI.Application.Features.FileMetadata.Commands.Delete
 {
     public class DeleteFileMetadataCommandValidator : AbstractValidator<DeleteFileMetadataCommand>
     {

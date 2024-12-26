@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace FileMetadataAPI.Application.Features.Commands.Add;
+namespace FileMetadataAPI.Application.Features.FileMetadata.Commands.Add;
 
 public class AddFileMetadataCommandValidation : AbstractValidator<AddFileMetadataCommand>
 {

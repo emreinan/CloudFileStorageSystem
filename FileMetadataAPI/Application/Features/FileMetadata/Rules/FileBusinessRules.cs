@@ -1,7 +1,7 @@
 ﻿using FileMetadataAPI.Infrastructure.Context;
-using File= FileMetadataAPI.Domain.Entities.File;
+using File = FileMetadataAPI.Domain.Entities.File;
 
-namespace FileMetadataAPI.Application.Features.Rules;
+namespace FileMetadataAPI.Application.Features.FileMetadata.Rules;
 
 public class FileBusinessRules
 {

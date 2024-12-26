@@ -1,4 +1,4 @@
-﻿namespace FileMetadataAPI.Application.Features.Queries.GetById;
+﻿namespace FileMetadataAPI.Application.Features.FileMetadata.Queries.GetById;
 
 public class GetByIdFileQueryDto
 {

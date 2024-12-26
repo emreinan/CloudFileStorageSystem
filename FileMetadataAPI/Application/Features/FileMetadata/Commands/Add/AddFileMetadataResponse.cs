@@ -1,4 +1,4 @@
-﻿namespace FileMetadataAPI.Application.Features.Commands.Add
+﻿namespace FileMetadataAPI.Application.Features.FileMetadata.Commands.Add
 {
     public class AddFileMetadataResponse
     {

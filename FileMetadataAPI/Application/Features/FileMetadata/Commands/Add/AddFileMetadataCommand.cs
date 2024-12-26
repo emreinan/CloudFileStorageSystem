@@ -3,10 +3,10 @@ using FileMetadataAPI.Domain.Enums;
 using FileMetadataAPI.Infrastructure.Context;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using File= FileMetadataAPI.Domain.Entities.File;
-using FileShare= FileMetadataAPI.Domain.Entities.FileShare;
+using File = FileMetadataAPI.Domain.Entities.File;
+using FileShare = FileMetadataAPI.Domain.Entities.FileShare;
 
-namespace FileMetadataAPI.Application.Features.Commands.Add;
+namespace FileMetadataAPI.Application.Features.FileMetadata.Commands.Add;
 
 public class AddFileMetadataCommand : IRequest<AddFileMetadataResponse>
 {

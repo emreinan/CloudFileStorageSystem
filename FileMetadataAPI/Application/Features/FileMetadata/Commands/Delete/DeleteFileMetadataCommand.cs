@@ -1,8 +1,8 @@
-﻿using FileMetadataAPI.Application.Features.Rules;
+﻿using FileMetadataAPI.Application.Features.FileMetadata.Rules;
 using FileMetadataAPI.Infrastructure.Context;
 using MediatR;
 
-namespace FileMetadataAPI.Application.Features.Commands.Delete;
+namespace FileMetadataAPI.Application.Features.FileMetadata.Commands.Delete;
 
 public class DeleteFileMetadataCommand : IRequest
 {

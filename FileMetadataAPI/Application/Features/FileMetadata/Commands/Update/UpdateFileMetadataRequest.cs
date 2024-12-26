@@ -1,4 +1,4 @@
-﻿namespace FileMetadataAPI.Application.Features.Commands.Update;
+﻿namespace FileMetadataAPI.Application.Features.FileMetadata.Commands.Update;
 
 public class UpdateFileMetadataRequest
 {

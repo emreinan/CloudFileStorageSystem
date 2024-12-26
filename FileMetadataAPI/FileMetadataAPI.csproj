@@ -22,7 +22,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Application\Features\Constans\" />
+    <Folder Include="Application\Features\FileMetadata\Constans\" />
+    <Folder Include="Application\Features\FileShare\" />
   </ItemGroup>
 
 </Project>

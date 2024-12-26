@@ -1,4 +1,4 @@
-﻿namespace FileMetadataAPI.Application.Features.Queries.GetList
+﻿namespace FileMetadataAPI.Application.Features.FileMetadata.Queries.GetList
 {
     public class GetListFileQueryDto
     {

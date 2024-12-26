@@ -1,9 +1,9 @@
-﻿using FileMetadataAPI.Application.Features.Rules;
-using FileMetadataAPI.Infrastructure.Context;
+﻿using FileMetadataAPI.Infrastructure.Context;
 using FluentValidation.AspNetCore;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
+using FileMetadataAPI.Application.Features.FileMetadata.Rules;
 
 namespace FileMetadataAPI;
 

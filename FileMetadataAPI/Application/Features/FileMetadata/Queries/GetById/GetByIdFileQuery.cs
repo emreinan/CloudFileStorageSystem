@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
-using FileMetadataAPI.Application.Features.Rules;
+using FileMetadataAPI.Application.Features.FileMetadata.Rules;
 using FileMetadataAPI.Infrastructure.Context;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace FileMetadataAPI.Application.Features.Queries.GetById;
+namespace FileMetadataAPI.Application.Features.FileMetadata.Queries.GetById;
 
 public class GetByIdFileQuery : IRequest<GetByIdFileQueryDto>
 {
