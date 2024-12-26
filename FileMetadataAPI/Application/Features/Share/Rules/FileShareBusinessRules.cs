@@ -1,6 +1,8 @@
 ﻿using FileShare = FileMetadataAPI.Domain.Entities.FileShare;
 using File = FileMetadataAPI.Domain.Entities.File;
 using System.Security.Claims;
+using FileMetadataAPI.Application.Exceptions.Types;
+using FileMetadataAPI.Application.Features.Share.Constans;
 
 namespace FileMetadataAPI.Application.Features.Share.Rules;
 
@@ -10,21 +12,21 @@ public class FileShareBusinessRules
     {
         if (fileShare is null)
         {
-            throw new KeyNotFoundException("FileShare not found.");
+            throw new NotFoundException(FileShareErrorMessage.FileShareNotFound);
         }
     }
     public void FileIsExist(File file)
     {
         if (file is null)
         {
-            throw new KeyNotFoundException("File not found.");
+            throw new NotFoundException(FileShareErrorMessage.FileNotFound);
         }
     }
     public int ClaimIsNull(Claim claim)
     {
         if (claim is null)
         {
-            throw new UnauthorizedAccessException("Claim not found.");
+            throw new AuthorizationException(FileShareErrorMessage.ClaimNotFound);
         }
         return int.Parse(claim.Value);
     }
@@ -32,7 +34,7 @@ public class FileShareBusinessRules
     {
         if (userId != requestUserId)
         {
-            throw new UnauthorizedAccessException("You are not allowed to share this file.");
+            throw new AuthorizationException(FileShareErrorMessage.NotAllowedToShare);
         }
     }
 }

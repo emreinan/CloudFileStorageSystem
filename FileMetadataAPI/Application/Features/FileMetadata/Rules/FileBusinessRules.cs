@@ -1,4 +1,6 @@
-﻿using FileMetadataAPI.Infrastructure.Context;
+﻿using FileMetadataAPI.Application.Exceptions.Types;
+using FileMetadataAPI.Application.Features.FileMetadata.Constans;
+using FileMetadataAPI.Infrastructure.Context;
 using File = FileMetadataAPI.Domain.Entities.File;
 
 namespace FileMetadataAPI.Application.Features.FileMetadata.Rules;
@@ -9,7 +11,7 @@ public class FileBusinessRules
     {
         if (file is null)
         {
-            throw new Exception("File not found");
+            throw new NotFoundException(FileMetadataErrorMessage.FileNotFound);
         }
     }
 }
