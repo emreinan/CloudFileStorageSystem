@@ -1,10 +1,9 @@
-﻿using FileMetadataAPI.Application.Features.Commands.Add;
-using FileMetadataAPI.Application.Features.Commands.Delete;
-using FileMetadataAPI.Application.Features.Commands.Update;
-using FileMetadataAPI.Application.Features.Queries.GetById;
-using FileMetadataAPI.Application.Features.Queries.GetList;
+﻿using FileMetadataAPI.Application.Features.FileMetadata.Commands.Add;
+using FileMetadataAPI.Application.Features.FileMetadata.Commands.Delete;
+using FileMetadataAPI.Application.Features.FileMetadata.Commands.Update;
+using FileMetadataAPI.Application.Features.FileMetadata.Queries.GetById;
+using FileMetadataAPI.Application.Features.FileMetadata.Queries.GetList;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FileMetadataAPI.Controllers
