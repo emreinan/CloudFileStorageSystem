@@ -20,7 +20,6 @@ public class LoginCommand : IRequest<LoggedResponse>
     {
         public async Task<LoggedResponse> Handle(LoginCommand request, CancellationToken cancellationToken)
         {
-            // Logic to login user
             var user = await authDb.Users.Include(u=>u.RefreshTokens).FirstOrDefaultAsync(u => u.Email == request.Email);
 
             authBusinessRules.UserShouldExist(user);

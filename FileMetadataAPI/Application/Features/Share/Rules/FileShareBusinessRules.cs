@@ -8,21 +8,21 @@ namespace FileMetadataAPI.Application.Features.Share.Rules;
 
 public class FileShareBusinessRules
 {
-    public void FileShareIsNull(FileShare fileShare)
+    public void FileShareIsNull(FileShare? fileShare)
     {
         if (fileShare is null)
         {
             throw new NotFoundException(FileShareErrorMessage.FileShareNotFound);
         }
     }
-    public void FileIsExist(File file)
+    public void FileIsExist(File? file)
     {
         if (file is null)
         {
             throw new NotFoundException(FileShareErrorMessage.FileNotFound);
         }
     }
-    public int ClaimIsNull(Claim claim)
+    public int ClaimIsNull(Claim? claim)
     {
         if (claim is null)
         {

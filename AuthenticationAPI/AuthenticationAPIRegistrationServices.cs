@@ -20,6 +20,7 @@ public static class AuthenticationAPIRegistrationServices
         services.AddDbContext<AuthDbContext>(options =>
             options.UseSqlite(configuration.GetConnectionString("AuthenticationDb")));
 
+        services.AddHttpContextAccessor();
         services.AddScoped<IAuthService, AuthService>();
         services.AddScoped<AuthBusinessRules>();
 

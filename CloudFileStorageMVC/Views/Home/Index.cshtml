@@ -1,8 +1,18 @@
-﻿@{
+﻿@using System.Security.Claims
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
-    <p>@User.Identity.IsAuthenticated</p>
+    <p>
+        @if (User.Identity.IsAuthenticated)
+        {
+        <p>@User.FindFirst(ClaimTypes.Role)?.Value</p>
+        }
+        else
+        {
+        <p>Guest</p>
+        }
+    </p>
 </div>

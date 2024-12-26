@@ -62,10 +62,9 @@ public class AuthController(
         return RedirectToAction("Login", "Auth");
     }
 
-    [HttpGet("/Logout")]
+    [HttpPost("/Logout")]
     public IActionResult Logout()
     {
-        // Çerezleri silmek için süresini geçmiş bir tarihe ayarlıyoruz. 
         tokenService.RemoveAccessToken();
         tokenService.RemoveRefreshToken();
 
