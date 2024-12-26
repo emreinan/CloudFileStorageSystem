@@ -30,7 +30,7 @@ public class AuthController(
 
         if (token == null)
         {
-            ModelState.AddModelError(string.Empty, "Email or password is wrong.");
+            TempData["ErrorMessage"] = "Email or password is wrong.";
             return View(loginViewModel);
         }
 
