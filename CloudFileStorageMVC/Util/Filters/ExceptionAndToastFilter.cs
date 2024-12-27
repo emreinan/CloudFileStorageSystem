@@ -43,24 +43,11 @@ public class ExceptionAndToastFilter(IToastNotification toastNotification
 
         if (context.Exception is ApiException apiEx)
         {
-            if (apiEx.ApiError.Type == "https://example.com/probs/business")
-                toastNotification.AddErrorToastMessage(apiEx.ApiError.Detail);
+            toastNotification?.AddErrorToastMessage($"{apiEx.ApiError.Title}: {apiEx.ApiError.Detail}");
 
-            else if (apiEx.ApiError.Type == "https://example.com/probs/validation")
-                toastNotification.AddWarningToastMessage(apiEx.ApiError.Detail);
-
-            else if (apiEx.ApiError.Type == "https://example.com/probs/notfound")
-                toastNotification.AddInfoToastMessage(apiEx.ApiError.Detail);
-
-            else if (apiEx.ApiError.Type == "https://example.com/probs/internal")
-                toastNotification.AddAlertToastMessage(apiEx.ApiError.Detail);
-
-            else if (apiEx.ApiError.Type == "https://example.com/probs/unauthorized")
-                toastNotification.AddErrorToastMessage(apiEx.ApiError.Detail);
-
-            else
-                toastNotification.AddErrorToastMessage(apiEx.ApiError.Detail);
-
+            context.HttpContext.Items["ErrorTitle"] = apiEx.ApiError.Title;
+            context.HttpContext.Items["ErrorMessage"] = apiEx.ApiError.Detail;
+            context.HttpContext.Items["ErrorCode"] = apiEx.ApiError.Status;
         }
 
 
