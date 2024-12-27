@@ -117,4 +117,18 @@ public class FileController(IHttpClientFactory httpClientFactory, ITokenService 
         TempData["SuccessMessage"] = "File deleted successfully!";
         return RedirectToAction("Files");
     }
+
+    [HttpGet]
+    public async Task<IActionResult> GetFile(string fileName)
+    {
+        var response = await httpClient.GetAsync($"/api/FileStorage/download/{fileName}");
+        if (!response.IsSuccessStatusCode)
+        {
+            TempData["ErrorMessage"] = "An error occurred while downloading the file.";
+            return RedirectToAction("Files");
+        }
+
+        var stream = await response.Content.ReadAsStreamAsync();
+        return File(stream, "application/octet-stream", fileName);
+    }
 }

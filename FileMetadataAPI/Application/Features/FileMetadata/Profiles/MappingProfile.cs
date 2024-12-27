@@ -20,9 +20,10 @@ public class MappingProfile : Profile
 
         CreateMap<AddFileMetadataCommand, File>();
         CreateMap<CreateFileShareCommand, FileShare>();
-        CreateMap<File, GetListFileQueryDto>();
+        CreateMap<File, GetListFileQueryDto>().ForMember(dest => dest.Permission, opt => opt.MapFrom(src =>
+                src.FileShares.FirstOrDefault().Permission.ToString()));
         CreateMap<File, GetByIdFileQueryDto>().ForMember(dest => dest.Permission, opt => opt.MapFrom(src =>
-                src.FileShares.FirstOrDefault().Permission.ToString())); ;
+                src.FileShares.FirstOrDefault().Permission.ToString()));
         CreateMap<File, AddFileMetadataResponse>();
 
         
