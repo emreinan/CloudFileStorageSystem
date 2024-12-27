@@ -8,15 +8,16 @@ namespace CloudFileStorageMVC.Controllers;
 [Authorize]
 public class FileController(IHttpClientFactory httpClientFactory, ITokenService tokenService) : BaseController(tokenService, httpClientFactory)
 {
+    [HttpGet]
     public async Task<IActionResult> Files()
     {
-        var userId = GetUserId();
-        var endpoint = User.IsInRole("Admin") ? "/api/FileMetadata" : $"/api/FileMetadata/{userId}";
+        var endpoint = User.IsInRole("Admin")? "/api/FileMetadata": $"/api/FileMetadata/{GetUserId()}";
 
         var response = await httpClient.GetAsync(endpoint);
         if (!response.IsSuccessStatusCode)
         {
-            return View("Error");
+            TempData["ErrorMessage"] = "An error occurred while fetching the files.";
+            return BadRequest(response);
         }
 
         var files = await response.Content.ReadFromJsonAsync<List<FileViewModel>>();

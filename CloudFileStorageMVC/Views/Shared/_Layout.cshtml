@@ -29,29 +29,15 @@
                         </li>
                         @if (User.Identity.IsAuthenticated)
                         {
-                            @if (User.IsInRole("Admin"))
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="File" asp-action="Files">All Files</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="File" asp-action="MyFiles"
-                                       asp-route-userId="@User.FindFirst(ClaimTypes.NameIdentifier)?.Value">My Files</a>
-                                </li>
-                            }
-                            else
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="File" asp-action="MyFiles"
-                                       asp-route-userId="@User.FindFirst(ClaimTypes.NameIdentifier)?.Value">My Files</a>
-                                </li>
-                            }
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="File" asp-action="Files">Files</a>
+                            </li>
                         }
                     </ul>
                     <ul class="navbar-nav">
                         @if (User.Identity.IsAuthenticated)
                         {
-                            <li class="nav-item">
+                            <li class="nav-item me-2">
                                 <form method="post" asp-area="" asp-controller="Auth" asp-action="Logout">
                                     <button type="submit" class="btn btn-link nav-link text-dark">Logout</button>
                                 </form>
@@ -79,7 +65,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2024 - CloudFileStorageMVC 
+            &copy; 2024 - CloudFileStorageMVC
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
