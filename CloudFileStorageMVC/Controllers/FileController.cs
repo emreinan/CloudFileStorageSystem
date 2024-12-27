@@ -45,24 +45,32 @@ public class FileController(IHttpClientFactory httpClientFactory, ITokenService 
         }
 
         GatewayClientGetToken();
-
         using var content = new MultipartFormDataContent();
         content.Add(new StringContent(model.Description), "Description");
-        content.Add(new StringContent(model.Permission), "Permission");
         content.Add(new StreamContent(file.OpenReadStream()), "File", file.FileName);
 
         var response = await httpClient.PostAsync("/api/FileStorage/upload", content);
         if (!response.IsSuccessStatusCode)
         {
-            ModelState.AddModelError("", "An error occurred while uploading the file.");
+            TempData["ErrorMessage"] = "File uploaded is failed.";
             return View();
         }
+
+        var fileStorageResponse = await response.Content.ReadFromJsonAsync<FileStorageResponseModel>();
+
+        //var fileShareRequestDto = new CreateFileShareRequestModel ;
+        var responseShare = await httpClient.PostAsJsonAsync("/api/FileShare", new { FileId = fileStorageResponse!.Id, UserId = GetUserId(), Permission = model.Permission });
+        responseShare.EnsureSuccessStatusCode();
+        //if (!responseShare.IsSuccessStatusCode)
+        //{
+        //    TempData["ErrorMessage"] = "There is a mistake when uploading FileShare";
+        //    return View();
+        //}
 
         TempData["SuccessMessage"] = "File uploaded successfully!";
         return RedirectToAction("Files");
     }
 
-    [Authorize]
     [HttpGet]
     public async Task<IActionResult> Edit(int id)
     {

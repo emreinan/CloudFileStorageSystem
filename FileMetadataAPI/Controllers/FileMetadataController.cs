@@ -36,7 +36,7 @@ namespace FileMetadataAPI.Controllers
                 return Forbid("Unauthorized source");
             }
             var result = await mediator.Send(command);
-            return CreatedAtAction(nameof(GetFileById), new { id = result.Id }, result);
+            return Ok(result.Id);
         }
 
         [HttpPut("{id}")]

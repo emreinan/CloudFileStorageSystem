@@ -14,3 +14,4 @@ public class StringToPermissionConverter : ITypeConverter<string, Permission>
         throw new ArgumentException($"Geçersiz izin türü: {source}");
     }
 }
+

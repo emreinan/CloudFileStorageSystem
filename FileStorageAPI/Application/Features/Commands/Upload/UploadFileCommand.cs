@@ -31,13 +31,11 @@ public class UploadFileCommand : IRequest<FileStorageResult>
                 Description = request.Upload.Description,
                 UploadDate = DateTime.UtcNow,
                 OwnerId = userId,
-                Permission = request.Upload.Permission
-
             };
 
             var response = await httpClient.PostAsJsonAsync("api/FileMetadata", fileMetadata, cancellationToken);
             response.EnsureSuccessStatusCode();
-
+            var fileMeradataId = await response.Content.ReadFromJsonAsync<int>(cancellationToken);
 
             using (var stream = new FileStream(filePath, FileMode.Create))
             {
@@ -46,10 +44,11 @@ public class UploadFileCommand : IRequest<FileStorageResult>
 
             return new FileStorageResult
             {
-                Name = request.Upload.File.FileName,
+                Id = fileMeradataId,
+                OwnerId = userId,
+                Name = file.FileName,
                 Description = request.Upload.Description,
-                UploadDate = DateTime.Now,
-                OwnerId = userId
+                UploadDate = fileMetadata.UploadDate
             };
         }
     }

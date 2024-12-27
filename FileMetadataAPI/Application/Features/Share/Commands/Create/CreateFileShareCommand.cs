@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FileMetadataAPI.Application.Features.Share.Rules;
+using FileMetadataAPI.Domain.Enums;
 using FileMetadataAPI.Infrastructure.Context;
 using MediatR;
 using System.Security.Claims;

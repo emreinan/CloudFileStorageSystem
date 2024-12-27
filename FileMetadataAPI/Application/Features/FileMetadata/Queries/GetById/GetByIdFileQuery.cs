@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using FileMetadataAPI.Application.Features.FileMetadata.Rules;
 using FileMetadataAPI.Infrastructure.Context;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
