@@ -3,11 +3,11 @@ using FileMetadataAPI.Domain.Enums;
 
 namespace FileMetadataAPI.Application.Common.Maping;
 
-public class StringToPermissionConverter : ITypeConverter<string, Permission>
+public class StringToPermissionConverter : ITypeConverter<string, PermissionLevel>
 {
-    public Permission Convert(string source, Permission destination, ResolutionContext context)
+    public PermissionLevel Convert(string source, PermissionLevel destination, ResolutionContext context)
     {
-        if (Enum.TryParse<Permission>(source, true, out var permission))
+        if (Enum.TryParse<PermissionLevel>(source, true, out var permission))
         {
             return permission;
         }

@@ -15,15 +15,16 @@ public class MappingProfile : Profile
     public MappingProfile()
     {
 
-        CreateMap<string, Permission>().ConvertUsing<StringToPermissionConverter>();
-        CreateMap<Permission, string>().ConvertUsing<PermissionToStringConverter>();
+        CreateMap<string, PermissionLevel>().ConvertUsing<StringToPermissionConverter>();
+        CreateMap<string, SharingType>().ConvertUsing<StringToSharingTypeConverter>();
+
 
         CreateMap<AddFileMetadataCommand, File>();
         CreateMap<CreateFileShareCommand, FileShare>();
         CreateMap<File, GetListFileQueryDto>().ForMember(dest => dest.Permission, opt => opt.MapFrom(src =>
-                src.FileShares.FirstOrDefault().Permission.ToString()));
+                src.FileShares.FirstOrDefault().PermissionLevel.ToString()));
         CreateMap<File, GetByIdFileQueryDto>().ForMember(dest => dest.Permission, opt => opt.MapFrom(src =>
-                src.FileShares.FirstOrDefault().Permission.ToString()));
+                src.FileShares.FirstOrDefault().PermissionLevel.ToString()));
         CreateMap<File, AddFileMetadataResponse>();
 
         

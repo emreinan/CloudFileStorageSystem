@@ -11,10 +11,10 @@ public class MappingProfiles : Profile
 {
     public MappingProfiles()
     {
-        CreateMap<string, Permission>().ConvertUsing<StringToPermissionConverter>();
+        CreateMap<string, PermissionLevel>().ConvertUsing<StringToPermissionConverter>();
         CreateMap<CreateFileShareCommand, FileShare>();
 
         CreateMap<FileShare, FileShareDto>()
-            .ForMember(dest => dest.Permission, opt => opt.MapFrom(src => src.Permission.ToString()));
+            .ForMember(dest => dest.Permission, opt => opt.MapFrom(src => src.PermissionLevel.ToString()));
     }
 }

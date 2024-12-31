@@ -14,7 +14,7 @@ public class UpdateFileShareCommandHandler(FileMetaDataDbContext dbContext,FileS
         var fileShare = await dbContext.FileShares.FindAsync(request.Id);
         fileShareBusinessRules.FileShareIsNull(fileShare);
 
-        fileShare.Permission = Enum.Parse<Permission>(request.Permission, true);
+        fileShare.PermissionLevel = Enum.Parse<PermissionLevel>(request.Permission, true);
         dbContext.FileShares.Update(fileShare);
         await dbContext.SaveChangesAsync(cancellationToken);
 

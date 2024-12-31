@@ -12,12 +12,12 @@ public class FileShareConfiguration : IEntityTypeConfiguration<FileShare>
         builder.HasKey(fs => fs.Id);
         builder.Property(fs => fs.FileId).IsRequired();
         builder.Property(fs => fs.UserId).IsRequired();
-        builder.Property(fs => fs.Permission).IsRequired().HasConversion<string>(); // Enum'u int yerine string olarak saklar, daha anlamlı.
+        builder.Property(fs => fs.PermissionLevel).IsRequired().HasConversion<string>().HasMaxLength(50);
 
         builder.HasOne(fs => fs.File)
-                       .WithMany(f => f.FileShares)
-                       .HasForeignKey(fs => fs.FileId)
-                       .OnDelete(DeleteBehavior.Cascade);
+               .WithMany(f => f.FileShares)
+               .HasForeignKey(fs => fs.FileId)
+               .OnDelete(DeleteBehavior.Cascade);
     }
 }
 
