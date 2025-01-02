@@ -7,15 +7,32 @@ namespace CloudFileStorageMVC.Services.File;
 public class FileApiService(IHttpClientFactory httpClientFactory, ITokenService tokenService, IHttpContextAccessor httpContextAccessor)
     : BaseService(httpClientFactory, tokenService, httpContextAccessor), IFileApiService
 {
+    public async Task AddFileMetadataAsync(AddFileMetadataRequestModel model)
+    {
+        var response = await httpClient.PostAsJsonAsync("/api/FileMetadata", model);
+        if(!response.IsSuccessStatusCode)
+        {
+            await DeleteFileStorageAsync(model.Name);
+            var apiError = await response.Content.ReadFromJsonAsync<ApiError>();
+            throw new Exception(apiError?.Detail ?? "An error occurred while processing the request.");
+        }
+    }
+
     public async Task AddFileShare(int fileId, string permission)
     {
         var response = await httpClient.PostAsJsonAsync("/api/FileShare", new { FileId = fileId, UserId = GetUserId(), Permission = permission });
         await response.EnsureSuccessStatusCodeWithApiError();
     }
 
-    public async Task DeleteFileAsync(int id)
+    public async Task DeleteFileMetadataAsync(int id)
     {
         var response = await httpClient.DeleteAsync($"/api/FileMetadata/{id}");
+        await response.EnsureSuccessStatusCodeWithApiError();
+    }
+
+    public async Task DeleteFileStorageAsync(string fileName)
+    {
+        var response = await httpClient.DeleteAsync($"api/FileStorage/delete/{fileName}");
         await response.EnsureSuccessStatusCodeWithApiError();
     }
 
@@ -47,11 +64,11 @@ public class FileApiService(IHttpClientFactory httpClientFactory, ITokenService 
         return await response.Content.ReadAsStreamAsync();
     }
 
-    public async Task<FileStorageResponseModel> UploadFileAsync(IFormFile file, FileRequestModel model)
+    public async Task<FileStorageResponseModel> UploadFileStorageAsync(IFormFile file, string description)
     {
         GatewayClientGetToken();
         using var content = new MultipartFormDataContent();
-        content.Add(new StringContent(model.Description), "Description");
+        content.Add(new StringContent(description), "Description");
         content.Add(new StreamContent(file.OpenReadStream()), "File", file.FileName);
 
         var response = await httpClient.PostAsync("/api/FileStorage/upload", content);

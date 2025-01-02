@@ -35,9 +35,12 @@ public class FileController(IFileApiService fileApiService) : Controller
             return View(model);
         }
 
-        var fileStorageResponse = await fileApiService.UploadFileAsync(file, model);
+        var fileStorageResponse = await fileApiService.UploadFileStorageAsync(file, model.Description);
 
-        await fileApiService.AddFileShare(fileStorageResponse.Id, model.Permission);
+        var fileMetadataRequest = new AddFileMetadataRequestModel
+        (fileStorageResponse.Name,model.Description,model.SharingType,model.PermissionLevel);
+
+        await fileApiService.AddFileMetadataAsync(fileMetadataRequest);
 
         TempData["SuccessMessage"] = "File uploaded successfully!";
         return RedirectToAction("Files");
@@ -67,7 +70,7 @@ public class FileController(IFileApiService fileApiService) : Controller
     [HttpPost]
     public async Task<IActionResult> Delete(int id)
     {
-        await fileApiService.DeleteFileAsync(id);
+        await fileApiService.DeleteFileMetadataAsync(id);
 
         TempData["SuccessMessage"] = "File deleted successfully!";
         return RedirectToAction("Files");

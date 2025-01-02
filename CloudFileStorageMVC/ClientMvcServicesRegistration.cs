@@ -96,6 +96,7 @@ namespace CloudFileStorageMVC
             {
                 string apiUrl = configuration["GatewayApiUrl"] ?? throw new InvalidOperationException("GatewayApi URL is missing");
                 client.BaseAddress = new Uri(apiUrl);
+                client.DefaultRequestHeaders.Add("x-source", "GatewayApi");
             });
         }
     }

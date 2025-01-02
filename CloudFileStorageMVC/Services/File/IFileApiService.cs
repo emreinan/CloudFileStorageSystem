@@ -7,10 +7,11 @@ namespace CloudFileStorageMVC.Services.File
         Task<List<FileViewModel>> GetFilesAsync();
         Task<FileRequestModel> GetFileAsync(int userId);
         Task<Stream> GetFileStreamAsync(string fileName);
-        Task<FileStorageResponseModel> UploadFileAsync(IFormFile file, FileRequestModel model);
+        Task<FileStorageResponseModel> UploadFileStorageAsync(IFormFile file, string description);
         Task EditFileAsync(int id, FileRequestModel model);
-        Task DeleteFileAsync(int id);
+        Task DeleteFileMetadataAsync(int id);
+        Task DeleteFileStorageAsync(string fileName);
         Task AddFileShare(int fileId, string permission);
-
+        Task AddFileMetadataAsync(AddFileMetadataRequestModel model);
     }
 }

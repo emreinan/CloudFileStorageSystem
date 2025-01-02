@@ -9,6 +9,7 @@ using FileMetadataAPI.Application.Jwt;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Microsoft.OpenApi.Models;
 
 namespace FileMetadataAPI;
 
@@ -24,9 +25,10 @@ public static class FileMetadataApıRegisterServices
             configuration.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
         });
         AddJwtAuthentication(services,configuration);
+        AddSwaggerGen(services);
 
         services.AddAutoMapper(Assembly.GetExecutingAssembly());
-        services.AddScoped<FileBusinessRules>();
+        services.AddScoped<FileMetadataBusinessRules>();
         services.AddScoped<FileShareBusinessRules>();
         services.AddHttpContextAccessor();
 
@@ -64,5 +66,39 @@ public static class FileMetadataApıRegisterServices
            });
 
         services.AddAuthorization();
+    }
+
+    private static void AddSwaggerGen(IServiceCollection services)
+    {
+        services.AddSwaggerGen(c =>
+        {
+            c.AddSecurityDefinition(
+                name: "Bearer",
+                securityScheme: new OpenApiSecurityScheme
+                {
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = "Bearer",
+                    BearerFormat = "JWT",
+                    In = ParameterLocation.Header,
+                    Description =
+                        "JWT Authorization header using the Bearer scheme. " +
+                        "\r\n\r\n Enter 'Bearer' [space] and then your token in the text input below." +
+                        "\r\n\r\nExample: \"Bearer 12345.54321\""
+                }
+            );
+            c.AddSecurityRequirement(
+                new OpenApiSecurityRequirement
+                {
+            {
+                new OpenApiSecurityScheme
+                {
+                    Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "Bearer" }
+                },
+                new string[] { }
+            }
+                }
+            );
+        });
     }
 }

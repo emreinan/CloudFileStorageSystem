@@ -30,13 +30,13 @@ namespace FileMetadataAPI.Controllers
         [ApiExplorerSettings(IgnoreApi = true)] // Swagger'da action gözükmesin
         public async Task<IActionResult> AddFile([FromBody] AddFileMetadataCommand command)
         {
-            // Yanlızca FileStorageAPI tarafından istek yapılabilsin, elle veri eklenemesin
-            if (!Request.Headers.TryGetValue("x-source", out var source) || source != "FileStorageAPI")
+            //Yanlızca GatewayApi tarafından istek yapılabilsin
+            if (!Request.Headers.TryGetValue("x-source", out var source) || source != "GatewayApi")
             {
                 return Forbid("Unauthorized source");
             }
             var result = await mediator.Send(command);
-            return Ok(result.Id);
+            return Ok(result);
         }
 
         [HttpPut("{id}")]
