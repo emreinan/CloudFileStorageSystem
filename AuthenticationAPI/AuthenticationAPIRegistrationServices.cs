@@ -24,6 +24,7 @@ public static class AuthenticationAPIRegistrationServices
         services.AddScoped<IAuthService, AuthService>();
         services.AddScoped<AuthBusinessRules>();
 
+        services.AddAutoMapper(Assembly.GetExecutingAssembly());
         services.AddMediatR(configuration =>
         {
             configuration.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());

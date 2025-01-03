@@ -24,6 +24,7 @@ public static class FileMetadataApıRegisterServices
         {
             configuration.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
         });
+
         AddJwtAuthentication(services,configuration);
         AddSwaggerGen(services);
 
