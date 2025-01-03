@@ -42,17 +42,16 @@ public class FileApiService(IHttpClientFactory httpClientFactory, ITokenService 
         await response.EnsureSuccessStatusCodeWithApiError();
     }
 
-    public async Task<FileRequestModel> GetFileAsync(int userId)
+    public async Task<FileRequestModel> GetFileAsync(int fileId)
     {
-        var response = await httpClient.GetAsync($"/api/FileMetadata/{userId}");
+        var response = await httpClient.GetAsync($"/api/FileMetadata/{fileId}");
         await response.EnsureSuccessStatusCodeWithApiError();
         return await response.Content.ReadFromJsonAsync<FileRequestModel>();
     }
 
     public async Task<List<FileViewModel>> GetFilesAsync()
     {
-        var endpoint = httpContextAccessor.HttpContext.User.IsInRole("Admin") ? "/api/FileMetadata" : $"/api/FileMetadata/{GetUserId()}";
-        var response = await httpClient.GetAsync(endpoint);
+        var response = await httpClient.GetAsync("/api/FileMetadata");
         await response.EnsureSuccessStatusCodeWithApiError();
         return await response.Content.ReadFromJsonAsync<List<FileViewModel>>();
     }

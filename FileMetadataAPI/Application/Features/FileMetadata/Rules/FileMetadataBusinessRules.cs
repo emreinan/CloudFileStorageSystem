@@ -25,6 +25,11 @@ public class FileMetadataBusinessRules(IHttpContextAccessor httpContextAccessor)
         }
         return int.Parse(userIdClaim.Value);
     }
+    public bool IsUserAdmin()
+    {
+        var roleClaim = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.Role);
+        return roleClaim?.Value == "Admin";
+    }
     public static T ConvertToEnum<T>(string value) where T : struct, Enum
     {
         if (Enum.TryParse(value, true, out T result))

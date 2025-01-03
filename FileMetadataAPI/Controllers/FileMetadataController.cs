@@ -20,9 +20,9 @@ namespace FileMetadataAPI.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetFileById([FromRoute]int id)
+        public async Task<IActionResult> GetFileByFileId([FromRoute]int id)
         {
-            var response = await mediator.Send(new GetByIdFileQuery { Id = id });
+            var response = await mediator.Send(new GetByFileIdFileQuery { Id = id });
             return Ok(response);
         }
 
