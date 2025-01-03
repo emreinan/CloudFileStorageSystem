@@ -23,6 +23,7 @@ public class AddFileMetadataCommand : IRequest<AddFileMetadataResponse>
         public async Task<AddFileMetadataResponse> Handle(AddFileMetadataCommand request, CancellationToken cancellationToken)
         {
             var sharingType = FileMetadataBusinessRules.ConvertToEnum<SharingType>(request.SharingType);
+            var userId = fileMetadataBusinessRules.GetUserIdClaim();
 
             var entity = new File
             {
@@ -30,7 +31,7 @@ public class AddFileMetadataCommand : IRequest<AddFileMetadataResponse>
                 Description = request.Description,
                 UploadDate = DateTime.UtcNow,
                 SharingType = sharingType,
-                OwnerId = sharingType == Domain.Enums.SharingType.Public ? null : fileMetadataBusinessRules.GetUserIdClaim() //*
+                OwnerId = userId
             };
 
             if (sharingType == Domain.Enums.SharingType.SharedWithSpecificUsers && request.SharedWithUserIds is { Count: > 0 })

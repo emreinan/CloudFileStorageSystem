@@ -2,6 +2,7 @@
 using CloudFileStorageMVC.Services.File;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace CloudFileStorageMVC.Controllers;
 
@@ -11,6 +12,8 @@ public class FileController(IFileApiService fileApiService) : Controller
     [HttpGet]
     public async Task<IActionResult> Files()
     {
+        var userId = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
+        ViewBag.UserId = userId;
         var fileViewModels = await fileApiService.GetFilesAsync();
         return View(fileViewModels);
     }
@@ -38,7 +41,9 @@ public class FileController(IFileApiService fileApiService) : Controller
         var fileStorageResponse = await fileApiService.UploadFileStorageAsync(file, model.Description);
 
         var fileMetadataRequest = new AddFileMetadataRequestModel
-        (fileStorageResponse.Name,model.Description,model.SharingType,model.PermissionLevel);
+        (fileStorageResponse.Name, model.Description, model.SharingType, model.PermissionLevel);
+        if (model.SharedWithUserIds is not null)
+            fileMetadataRequest.SharedWithUserIds = model.SharedWithUserIds;
 
         await fileApiService.AddFileMetadataAsync(fileMetadataRequest);
 

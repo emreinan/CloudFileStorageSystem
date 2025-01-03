@@ -17,10 +17,10 @@ public class MappingProfile : Profile
 
         CreateMap<File, GetListFileQueryDto>()
             .ForMember(dest => dest.PermissionLevel, opt => opt.MapFrom(src =>
-                src.FileShares.FirstOrDefault().PermissionLevel.ToString() ?? string.Empty));
+                src.FileShares.FirstOrDefault()!.PermissionLevel.ToString() ?? string.Empty));
 
         CreateMap<File, GetByFileIdFileQueryDto>()
             .ForMember(dest => dest.PermissionLevel, opt => opt.MapFrom(src =>
-                src.FileShares.FirstOrDefault().PermissionLevel.ToString() ?? string.Empty));
+                src.FileShares.FirstOrDefault()!.PermissionLevel.ToString() ?? string.Empty));
     }
 }
