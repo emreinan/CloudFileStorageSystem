@@ -28,11 +28,10 @@ public class UpdateFileMetadataCommand : IRequest
 
                 if (newSharingType == SharingType.Private)
                 {
-                    file.OwnerId = fileBusinessRules.GetUserIdClaim();
+                    file.FileShares.Clear();
                 }
                 else if (newSharingType == SharingType.SharedWithSpecificUsers)
                 {
-                    file.OwnerId = null;
                     file.FileShares.Clear();
 
                     if (request.Request.SharedWithUserIds is { Count: > 0 })
@@ -50,7 +49,7 @@ public class UpdateFileMetadataCommand : IRequest
                 }
                 else if (newSharingType == SharingType.Public)
                 {
-                    file.OwnerId = null;
+                    file.FileShares.Clear();
                 }
             }
             file.Description = request.Request.Description;

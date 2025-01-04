@@ -18,12 +18,6 @@ public class FileApiService(IHttpClientFactory httpClientFactory, ITokenService 
         }
     }
 
-    public async Task AddFileShare(int fileId, string permission)
-    {
-        var response = await httpClient.PostAsJsonAsync("/api/FileShare", new { FileId = fileId, UserId = GetUserId(), Permission = permission });
-        await response.EnsureSuccessStatusCodeWithApiError();
-    }
-
     public async Task DeleteFileMetadataAsync(int id)
     {
         var response = await httpClient.DeleteAsync($"/api/FileMetadata/{id}");
@@ -36,21 +30,22 @@ public class FileApiService(IHttpClientFactory httpClientFactory, ITokenService 
         await response.EnsureSuccessStatusCodeWithApiError();
     }
 
-    public async Task EditFileAsync(int id, FileRequestModel model)
+    public async Task EditFileAsync(int id, EditViewModel model)
     {
         var response = await httpClient.PutAsJsonAsync($"/api/FileMetadata/{id}", model);
         await response.EnsureSuccessStatusCodeWithApiError();
     }
 
-    public async Task<FileRequestModel> GetFileAsync(int fileId)
+    public async Task<EditViewModel> GetFileAsync(int fileId)
     {
         var response = await httpClient.GetAsync($"/api/FileMetadata/{fileId}");
         await response.EnsureSuccessStatusCodeWithApiError();
-        return await response.Content.ReadFromJsonAsync<FileRequestModel>();
+        return await response.Content.ReadFromJsonAsync<EditViewModel>();
     }
 
     public async Task<List<FileViewModel>> GetFilesAsync()
     {
+        GatewayClientGetToken();
         var response = await httpClient.GetAsync("/api/FileMetadata");
         await response.EnsureSuccessStatusCodeWithApiError();
         return await response.Content.ReadFromJsonAsync<List<FileViewModel>>();

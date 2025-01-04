@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace FileMetadataAPI.Infrastructure.Migrations
 {
     [DbContext(typeof(FileMetaDataDbContext))]
-    [Migration("20241219125652_Mig-1")]
+    [Migration("20250104122925_Mig-1")]
     partial class Mig1
     {
         /// <inheritdoc />
@@ -46,6 +46,11 @@ namespace FileMetadataAPI.Infrastructure.Migrations
                     b.Property<int>("OwnerId")
                         .HasColumnType("integer");
 
+                    b.Property<string>("SharingType")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
                     b.Property<DateTime>("UploadDate")
                         .HasColumnType("timestamp with time zone");
 
@@ -56,38 +61,35 @@ namespace FileMetadataAPI.Infrastructure.Migrations
 
             modelBuilder.Entity("FileMetadataAPI.Domain.Entities.FileShare", b =>
                 {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
                     b.Property<int>("FileId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("FileId1")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Permission")
+                    b.Property<string>("PermissionLevel")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
-                    b.HasKey("FileId", "UserId");
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
 
-                    b.HasIndex("FileId1");
+                    b.HasKey("Id");
+
+                    b.HasIndex("FileId");
 
                     b.ToTable("FileShares", (string)null);
                 });
 
             modelBuilder.Entity("FileMetadataAPI.Domain.Entities.FileShare", b =>
                 {
-                    b.HasOne("FileMetadataAPI.Domain.Entities.File", null)
-                        .WithMany()
-                        .HasForeignKey("FileId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("FileMetadataAPI.Domain.Entities.File", "File")
                         .WithMany("FileShares")
-                        .HasForeignKey("FileId1")
+                        .HasForeignKey("FileId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

@@ -4,7 +4,6 @@ using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 using FileMetadataAPI.Application.Features.FileMetadata.Rules;
-using FileMetadataAPI.Application.Features.Share.Rules;
 using FileMetadataAPI.Application.Jwt;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -30,7 +29,6 @@ public static class FileMetadataApıRegisterServices
 
         services.AddAutoMapper(Assembly.GetExecutingAssembly());
         services.AddScoped<FileMetadataBusinessRules>();
-        services.AddScoped<FileShareBusinessRules>();
         services.AddHttpContextAccessor();
 
         services.AddFluentValidationAutoValidation();

@@ -12,7 +12,7 @@ namespace FileMetadataAPI.Application.Features.FileMetadata.Queries.GetList;
 public class GetListFileQuery : IRequest<IEnumerable<GetListFileQueryDto>>
 {
     class GetListFileQueryHandler(
-        FileMetaDataDbContext fileMetaDataDbContext, 
+        FileMetaDataDbContext fileMetaDataDbContext,
         IMapper mapper,
         FileMetadataBusinessRules fileMetadataBusinessRules
         ) : IRequestHandler<GetListFileQuery, IEnumerable<GetListFileQueryDto>>
@@ -31,10 +31,9 @@ public class GetListFileQuery : IRequest<IEnumerable<GetListFileQueryDto>>
                 var userId = fileMetadataBusinessRules.GetUserIdClaim();
                 files = await fileMetaDataDbContext.Files
                     .Include(f => f.FileShares)
-                    .Where(f =>
-                        f.SharingType == SharingType.Public ||
-                        (f.SharingType == SharingType.Private && f.OwnerId == userId) ||
-                        (f.SharingType == SharingType.SharedWithSpecificUsers && f.FileShares.Any(fs => fs.UserId == userId))
+                    .Where(f =>f.OwnerId == userId ||
+                           f.SharingType == SharingType.Public ||
+                           f.SharingType == SharingType.SharedWithSpecificUsers && f.FileShares.Any(fs => fs.UserId == userId)
                     ).ToListAsync(cancellationToken);
             }
 

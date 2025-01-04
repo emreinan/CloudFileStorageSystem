@@ -1,5 +1,7 @@
-﻿using CloudFileStorageMVC.Models;
+﻿using CloudFileStorageMVC.Dtos.User;
+using CloudFileStorageMVC.Models;
 using CloudFileStorageMVC.Services.File;
+using CloudFileStorageMVC.Services.User;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -7,25 +9,27 @@ using System.Security.Claims;
 namespace CloudFileStorageMVC.Controllers;
 
 [Authorize]
-public class FileController(IFileApiService fileApiService) : Controller
+public class FileController(IFileApiService fileApiService, IUserService userService) : Controller
 {
     [HttpGet]
     public async Task<IActionResult> Files()
     {
-        var userId = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
+        var userId = GetCurrentUserId();
         ViewBag.UserId = userId;
+
         var fileViewModels = await fileApiService.GetFilesAsync();
         return View(fileViewModels);
     }
 
     [HttpGet]
-    public IActionResult Upload()
+    public async Task<IActionResult> Upload()
     {
-        return View();
+        var model = await PrepareUploadViewModel();
+        return View(model);
     }
 
     [HttpPost]
-    public async Task<IActionResult> Upload(IFormFile file, FileRequestModel model)
+    public async Task<IActionResult> Upload(IFormFile file, [FromForm]UploadViewModel model)
     {
         if (file is null || file.Length == 0)
         {
@@ -35,15 +39,22 @@ public class FileController(IFileApiService fileApiService) : Controller
 
         if (!ModelState.IsValid)
         {
+            model = await PrepareUploadViewModel();
             return View(model);
         }
 
+     
         var fileStorageResponse = await fileApiService.UploadFileStorageAsync(file, model.Description);
 
         var fileMetadataRequest = new AddFileMetadataRequestModel
         (fileStorageResponse.Name, model.Description, model.SharingType, model.PermissionLevel);
-        if (model.SharedWithUserIds is not null)
-            fileMetadataRequest.SharedWithUserIds = model.SharedWithUserIds;
+
+        if (model.SharedWithUserIds != null)
+        {
+            fileMetadataRequest.SharedWithUserIds = model.SharedWithUserIds
+                .Select(id => int.Parse(id.ToString())) 
+                .ToList();
+        }
 
         await fileApiService.AddFileMetadataAsync(fileMetadataRequest);
 
@@ -54,15 +65,21 @@ public class FileController(IFileApiService fileApiService) : Controller
     [HttpGet]
     public async Task<IActionResult> Edit(int id)
     {
+        var users = await GetUsers(userService);
+        ViewBag.Users = users;
+
         var file = await fileApiService.GetFileAsync(id);
         return View(file);
     }
 
     [HttpPost]
-    public async Task<IActionResult> Edit(int id, FileRequestModel model)
+    public async Task<IActionResult> Edit(int id, EditViewModel model)
     {
         if (!ModelState.IsValid)
         {
+            var users = await GetUsers(userService);
+            ViewBag.Users = users;
+
             return View(model);
         }
 
@@ -88,4 +105,29 @@ public class FileController(IFileApiService fileApiService) : Controller
 
         return File(stream, "application/octet-stream", fileName);
     }
+
+    private async Task<List<UserDto>> GetUsers(IUserService userService)
+    {
+        var users = await userService.GetUsersAsync();
+        return users;
+    }
+
+    private int GetCurrentUserId()
+    {
+        var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+        return userId;
+    }
+
+    private async Task<UploadViewModel> PrepareUploadViewModel()
+    {
+        var users = await GetUsers(userService);
+        var userId = GetCurrentUserId();
+        var filteredUsers = users.Where(user => user.Id != userId).ToList();
+
+        return new UploadViewModel
+        {
+            SharedWithUsers = filteredUsers
+        };
+    }
+
 }
