@@ -1,4 +1,5 @@
-﻿using CloudFileStorageMVC.Models;
+﻿using CloudFileStorageMVC.Dtos.File;
+using CloudFileStorageMVC.Models;
 using CloudFileStorageMVC.Services.Token;
 using CloudFileStorageMVC.Util.ExceptionHandling;
 
@@ -7,7 +8,7 @@ namespace CloudFileStorageMVC.Services.File;
 public class FileApiService(IHttpClientFactory httpClientFactory, ITokenService tokenService, IHttpContextAccessor httpContextAccessor)
     : BaseService(httpClientFactory, tokenService, httpContextAccessor), IFileApiService
 {
-    public async Task AddFileMetadataAsync(AddFileMetadataRequestModel model)
+    public async Task AddFileMetadataAsync(AddFileMetadataRequestDto model)
     {
         var response = await httpClient.PostAsJsonAsync("/api/FileMetadata", model);
         if(!response.IsSuccessStatusCode)
@@ -30,7 +31,7 @@ public class FileApiService(IHttpClientFactory httpClientFactory, ITokenService 
         await response.EnsureSuccessStatusCodeWithApiError();
     }
 
-    public async Task EditFileAsync(int id, EditViewModel model)
+    public async Task EditFileAsync(int id, EditFileRequestDto model)
     {
         var response = await httpClient.PutAsJsonAsync($"/api/FileMetadata/{id}", model);
         await response.EnsureSuccessStatusCodeWithApiError();

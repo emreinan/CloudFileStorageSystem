@@ -1,18 +1,17 @@
-﻿namespace CloudFileStorageMVC.Models;
+﻿namespace CloudFileStorageMVC.Dtos.File;
 
-public class AddFileMetadataRequestModel
+public class EditFileRequestDto
 {
-    public string Name { get; set; }
     public string Description { get; set; }
     public string SharingType { get; set; }
     public string PermissionLevel { get; set; }
     public List<int>? SharedWithUserIds { get; set; }
 
-    public AddFileMetadataRequestModel(string name, string description, string sharingType, string permissionLevel)
+    public EditFileRequestDto(string description, string sharingType, string permissionLevel)
     {
-        Name = name;
         Description = description;
         SharingType = sharingType;
         PermissionLevel = permissionLevel;
     }
+
 }

@@ -1,8 +1,7 @@
-﻿@model EditViewModel
+﻿@using CloudFileStorageMVC.Dtos.User
+@model EditViewModel
 @{
     ViewData["Title"] = "Edit File";
-    var users = ViewBag.Users as List<dynamic>;
-    var sharedWithUserIds = Model.SharedWithUserIds ?? new List<int>();
 }
 
 <div class="container mt-4">
@@ -20,7 +19,7 @@
                 <input type="radio" asp-for="SharingType" value="Public" class="form-check-input sharing-type" id="SharingTypePublic" />
                 <label for="SharingTypePublic" class="form-check-label">Public</label>
             </div>
-            <div>
+            <div class="mb-2">
                 <input type="radio" asp-for="SharingType" value="Private" class="form-check-input sharing-type" id="SharingTypePrivate" />
                 <label for="SharingTypePrivate" class="form-check-label">Private</label>
             </div>
@@ -34,15 +33,23 @@
         <div id="specific-users-section" style="display: none;">
             <div class="mb-3">
                 <label class="form-label">Select Users</label>
-                <select id="SharedWithUserIds" name="SharedWithUserIds" class="form-select" multiple>
-                    @foreach (var user in users!)
-                    {
-                        <option value="@user.Id"
-                                selected="@(sharedWithUserIds.Contains(user.Id))">
-                            @user.Name (@user.Email)
-                        </option>
-                    }
-                </select>
+                @if (Model.SharedWithUsers is not null && Model.SharedWithUsers.Count > 0)
+                {
+                    <select id="SharedWithUserIds" name="SharedWithUserIds" class="form-select" multiple>
+                        @foreach (var user in Model.SharedWithUsers!)
+                        {
+                            bool isSelected = Model.SharedWithUserIds?.Contains(user.Id) == true;
+
+                            <option value="@user.Id" selected="@(isSelected)">
+                                Name : @user.Name - Email: (@user.Email)
+                            </option>
+                        }
+                    </select>
+                }
+                else
+                {
+                    <p class="text-muted">No other users available in the system.</p>
+                }
             </div>
 
             <div class="mb-3">
@@ -50,7 +57,6 @@
                 <select asp-for="PermissionLevel" class="form-select">
                     <option value="Read" selected="@(Model.PermissionLevel == "Read")">Read</option>
                     <option value="Edit" selected="@(Model.PermissionLevel == "Edit")">Edit</option>
-
                 </select>
             </div>
         </div>

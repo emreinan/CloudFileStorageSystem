@@ -1,4 +1,5 @@
-﻿using CloudFileStorageMVC.Dtos.User;
+﻿using CloudFileStorageMVC.Dtos.File;
+using CloudFileStorageMVC.Dtos.User;
 using CloudFileStorageMVC.Models;
 using CloudFileStorageMVC.Services.File;
 using CloudFileStorageMVC.Services.User;
@@ -29,7 +30,7 @@ public class FileController(IFileApiService fileApiService, IUserService userSer
     }
 
     [HttpPost]
-    public async Task<IActionResult> Upload(IFormFile file, [FromForm]UploadViewModel model)
+    public async Task<IActionResult> Upload(IFormFile file, [FromForm] UploadViewModel model)
     {
         if (file is null || file.Length == 0)
         {
@@ -43,16 +44,16 @@ public class FileController(IFileApiService fileApiService, IUserService userSer
             return View(model);
         }
 
-     
+
         var fileStorageResponse = await fileApiService.UploadFileStorageAsync(file, model.Description);
 
-        var fileMetadataRequest = new AddFileMetadataRequestModel
+        var fileMetadataRequest = new AddFileMetadataRequestDto
         (fileStorageResponse.Name, model.Description, model.SharingType, model.PermissionLevel);
 
-        if (model.SharedWithUserIds != null)
+        if (model.SharedWithUserIds is not null)
         {
             fileMetadataRequest.SharedWithUserIds = model.SharedWithUserIds
-                .Select(id => int.Parse(id.ToString())) 
+                .Select(id => int.Parse(id.ToString()))
                 .ToList();
         }
 
@@ -65,25 +66,30 @@ public class FileController(IFileApiService fileApiService, IUserService userSer
     [HttpGet]
     public async Task<IActionResult> Edit(int id)
     {
-        var users = await GetUsers(userService);
-        ViewBag.Users = users;
+        var fileResponse = await fileApiService.GetFileAsync(id);
+        var file = await PrepareEditViewModel(fileResponse);
 
-        var file = await fileApiService.GetFileAsync(id);
         return View(file);
     }
 
     [HttpPost]
-    public async Task<IActionResult> Edit(int id, EditViewModel model)
+    public async Task<IActionResult> Edit(int id, [FromForm] EditViewModel model)
     {
         if (!ModelState.IsValid)
         {
             var users = await GetUsers(userService);
-            ViewBag.Users = users;
-
+            model.SharedWithUsers = users.Where(user => user.Id != GetCurrentUserId()).ToList();
             return View(model);
         }
 
-        await fileApiService.EditFileAsync(id, model);
+        var editRequest = new EditFileRequestDto(model.Description, model.SharingType, model.PermissionLevel!);
+        if (model.SharedWithUserIds is not null || model.SharedWithUserIds!.Count>0)
+        {
+            editRequest.SharedWithUserIds = model.SharedWithUserIds
+                .Select(id => int.Parse(id.ToString())).ToList();
+        }
+
+        await fileApiService.EditFileAsync(id, editRequest);
 
         TempData["SuccessMessage"] = "File updated successfully!";
         return RedirectToAction(nameof(Files));
@@ -130,4 +136,20 @@ public class FileController(IFileApiService fileApiService, IUserService userSer
         };
     }
 
+    private async Task<EditViewModel> PrepareEditViewModel(EditViewModel file)
+    {
+        var users = await GetUsers(userService);
+        var userId = GetCurrentUserId();
+        var filteredUsers = users.Where(user => user.Id != userId).ToList();
+
+        var model = new EditViewModel
+        {
+            Description = file.Description,
+            SharingType = file.SharingType,
+            PermissionLevel = file.PermissionLevel,
+            SharedWithUserIds = file.SharedWithUserIds ?? new (),
+            SharedWithUsers = filteredUsers
+        };
+        return model;
+    }
 }
