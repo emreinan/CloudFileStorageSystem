@@ -96,9 +96,10 @@ public class FileController(IFileApiService fileApiService, IUserService userSer
     }
 
     [HttpPost]
-    public async Task<IActionResult> Delete(int id)
+    public async Task<IActionResult> Delete(int id, string fileName)
     {
         await fileApiService.DeleteFileMetadataAsync(id);
+        await fileApiService.DeleteFileStorageAsync(fileName);
 
         TempData["SuccessMessage"] = "File deleted successfully!";
         return RedirectToAction("Files");
