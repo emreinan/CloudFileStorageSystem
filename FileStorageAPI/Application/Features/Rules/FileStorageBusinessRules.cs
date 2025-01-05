@@ -4,17 +4,8 @@ using System.Security.Claims;
 
 namespace FileStorageAPI.Application.Features.Rules;
 
-public class FileStorageBusinessRules(IHttpContextAccessor httpContextAccessor)
+public class FileStorageBusinessRules
 {
-    public int GetUserIdClaim()
-    {
-        var userIdClaim = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier);
-        if (userIdClaim is null)
-        {
-            throw new AuthorizationException(FileStorageErrorMessages.UserNotAuthorized);
-        }
-        return int.Parse(userIdClaim.Value);
-    }
     public void UploadPathIsExists(string uploadPath)
     {
         if (!Directory.Exists(uploadPath))

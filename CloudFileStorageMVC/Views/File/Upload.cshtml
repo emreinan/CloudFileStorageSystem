@@ -1,4 +1,4 @@
-﻿@model FileRequestModel
+﻿@model UploadViewModel
 @{
     ViewData["Title"] = "Upload File";
 }
@@ -18,19 +18,70 @@
         </div>
 
         <div class="mb-3">
-            <label class="form-label">Permission</label>
+            <label class="form-label">Sharing Type</label>
             <div class="mb-2">
-                <input type="radio" asp-for="Permission" value="Public" class="form-check-input" id="permissionPublic" />
-                <label for="permissionPublic" class="form-check-label">Public</label>
+                <input type="radio" asp-for="SharingType" value="Public" class="form-check-input sharing-type" id="SharingTypePublic" />
+                <label for="SharingTypePublic" class="form-check-label">Public</label>
+            </div>
+            <div class="mb-2">
+                <input type="radio" asp-for="SharingType" value="Private" class="form-check-input sharing-type" id="SharingTypePrivate" />
+                <label for="SharingTypePrivate" class="form-check-label">Private</label>
             </div>
             <div>
-                <input type="radio" asp-for="Permission" value="Private" class="form-check-input" id="permissionPrivate" />
-                <label for="permissionPrivate" class="form-check-label">Private</label>
+                <input type="radio" asp-for="SharingType" value="SharedWithSpecificUsers" class="form-check-input sharing-type" id="SharingTypeSpecificUsers" />
+                <label for="SharingTypeSpecificUsers" class="form-check-label">Specific Users</label>
             </div>
-            <span asp-validation-for="Permission" class="text-danger"></span>
+            <span asp-validation-for="SharingType" class="text-danger"></span>
+        </div>
+
+        <div id="specific-users-section" style="display: none;" >
+            <div class="mb-3">
+                <label class="form-label">Select Users</label>
+                @if (Model.SharedWithUsers != null && Model.SharedWithUsers.Count > 0)
+                {
+                    <select id="SharedWithUserIds" name="SharedWithUserIds" class="form-select" multiple>
+                        @foreach (var user in Model.SharedWithUsers)
+                        {
+                            <option value="@user.Id">Name : @user.Name - Email: (@user.Email)</option>
+                        }
+                    </select>
+                }
+                else
+                {
+                    <p class="text-muted">Sistemde kayıtlı başka kullanıcı yok.</p>
+                }
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Permission Level</label>
+                <select asp-for="PermissionLevel" class="form-select">
+                    <option value="Read">Read</option>
+                    <option value="Edit">Edit</option>
+                </select>
+            </div>
         </div>
 
         <button type="submit" class="btn btn-success">Upload</button>
         <a asp-action="Files" class="btn btn-secondary">Cancel</a>
     </form>
 </div>
+
+@section Scripts {
+    <script>
+        document.querySelectorAll('.sharing-type').forEach(radio => {
+            radio.addEventListener('change', () => {
+                const specificUsersSection = document.getElementById('specific-users-section');
+                if (document.getElementById('SharingTypeSpecificUsers').checked) {
+                    specificUsersSection.style.display = 'block';
+                } else {
+                    specificUsersSection.style.display = 'none';
+                }
+            });
+        });
+
+        if (document.getElementById('SharingTypeSpecificUsers').checked) {
+            document.getElementById('specific-users-section').style.display = 'block';
+        }
+
+    </script>
+}

@@ -10,10 +10,13 @@ public class FileConfiguration : IEntityTypeConfiguration<File>
     {
         builder.ToTable("Files");
         builder.HasKey(f => f.Id);
+        builder.Property(f => f.OwnerId).IsRequired(); 
         builder.Property(f => f.Name).IsRequired().HasMaxLength(200);
         builder.Property(f => f.Description).HasMaxLength(500);
         builder.Property(f => f.UploadDate).IsRequired();
+        builder.Property(f => f.SharingType).IsRequired().HasConversion<string>().HasMaxLength(50);
 
     }
 }
+
 

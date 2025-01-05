@@ -37,10 +37,6 @@ public class FileStorageController(IMediator mediator) : ControllerBase
     [HttpDelete("delete/{FileName}")]
     public async Task<IActionResult> Delete([FromRoute] DeleteFileDto deleteFileDto)
     {
-        if (!Request.Headers.TryGetValue("x-source", out var source) || source != "FileMetadataAPI")
-        {
-            return Forbid("Unauthorized source");
-        }
         var command = new DeleteFileCommand { Delete = deleteFileDto };
         var result = await mediator.Send(command);
 

@@ -1,16 +1,17 @@
-﻿using CloudFileStorageMVC.Models;
+﻿using CloudFileStorageMVC.Dtos.File;
+using CloudFileStorageMVC.Models;
 
 namespace CloudFileStorageMVC.Services.File
 {
     public interface IFileApiService
     {
         Task<List<FileViewModel>> GetFilesAsync();
-        Task<FileRequestModel> GetFileAsync(int userId);
+        Task<EditViewModel> GetFileAsync(int fileId);
         Task<Stream> GetFileStreamAsync(string fileName);
-        Task<FileStorageResponseModel> UploadFileAsync(IFormFile file, FileRequestModel model);
-        Task EditFileAsync(int id, FileRequestModel model);
-        Task DeleteFileAsync(int id);
-        Task AddFileShare(int fileId, string permission);
-
+        Task<FileStorageResponseModel> UploadFileStorageAsync(IFormFile file, string description);
+        Task EditFileAsync(int id, EditFileRequestDto model);
+        Task DeleteFileMetadataAsync(int id);
+        Task DeleteFileStorageAsync(string fileName);
+        Task AddFileMetadataAsync(AddFileMetadataRequestDto model);
     }
 }

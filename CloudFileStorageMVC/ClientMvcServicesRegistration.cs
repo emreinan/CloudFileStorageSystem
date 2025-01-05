@@ -2,6 +2,7 @@
 using CloudFileStorageMVC.Services.Auth;
 using CloudFileStorageMVC.Services.File;
 using CloudFileStorageMVC.Services.Token;
+using CloudFileStorageMVC.Services.User;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Reflection;
@@ -26,6 +27,7 @@ namespace CloudFileStorageMVC
         {
             services.AddScoped<ITokenService, CookieTokenService>();
             services.AddScoped<IAuthService, HttpAuthService>();
+            services.AddScoped<IUserService, HttpUserService>();
             services.AddScoped<IFileApiService, FileApiService>();
             services.AddScoped<BaseService>();
         }
@@ -96,6 +98,7 @@ namespace CloudFileStorageMVC
             {
                 string apiUrl = configuration["GatewayApiUrl"] ?? throw new InvalidOperationException("GatewayApi URL is missing");
                 client.BaseAddress = new Uri(apiUrl);
+                client.DefaultRequestHeaders.Add("x-source", "GatewayApi");
             });
         }
     }

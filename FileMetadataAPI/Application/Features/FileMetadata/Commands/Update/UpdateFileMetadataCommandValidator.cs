@@ -8,6 +8,9 @@ namespace FileMetadataAPI.Application.Features.FileMetadata.Commands.Update
         {
             RuleFor(x => x.Description)
                 .MaximumLength(500).WithMessage("Description must not exceed 500 characters");
+
+            RuleFor(x => x.SharingType)
+                .NotEmpty().WithMessage("SharingType is required");
         }
     }
 }
