@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Features\Commands\Update\" />
+    <Folder Include="Features\Commands\Delete\" />
+    <Folder Include="Features\Profiles\" />
+    <Folder Include="Features\Queries\GetList\" />
+    <Folder Include="Features\Queries\GetById\" />
+    <Folder Include="Features\Rules\" />
+    <Folder Include="Features\Constants\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
+    <PackageReference Include="FluentValidation" Version="11.11.0" />
+    <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
+    <PackageReference Include="MediatR" Version="12.4.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FileMetadataAPI.Core\FileMetadataAPI.Core.csproj" />
+    <ProjectReference Include="..\FileMetadataAPI.Domain\FileMetadataAPI.Domain.csproj" />
+    <ProjectReference Include="..\FileMetadataAPI.Persistence\FileMetadataAPI.Persistence.csproj" />
+  </ItemGroup>
+
+</Project>

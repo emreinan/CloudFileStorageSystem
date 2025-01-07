@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Exceptions\HttpProblemDetails\" />
+    <Folder Include="Exceptions\Types\" />
+    <Folder Include="Exceptions\Middleware\" />
+    <Folder Include="Exceptions\Handlers\" />
+    <Folder Include="Exceptions\Extensions\" />
+    <Folder Include="Jwt\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FileMetadataAPI.Domain\FileMetadataAPI.Domain.csproj" />
+  </ItemGroup>
+
+</Project>
