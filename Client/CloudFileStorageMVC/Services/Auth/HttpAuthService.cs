@@ -12,7 +12,7 @@ public class HttpAuthService(IHttpClientFactory httpClientFactory) : IAuthServic
     public async Task<TokenResponse> LoginAsync(LoginDto loginDto)
     {
         var response = await _httpClient.PostAsJsonAsync("/api/Auth/login", loginDto);
-        await response.EnsureSuccessStatusCodeWithApiError();
+        response.EnsureSuccessStatusCode();
         var result = await response.Content.ReadFromJsonAsync<TokenResponse>();
         return result;
     }
