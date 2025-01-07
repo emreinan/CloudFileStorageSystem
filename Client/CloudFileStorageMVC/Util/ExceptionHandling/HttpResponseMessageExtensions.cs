@@ -1,4 +1,5 @@
-﻿using System.Net.Http.Json;
+﻿using System.Net;
+using System.Net.Http.Json;
 using System.Text.Json;
 
 namespace CloudFileStorageMVC.Util.ExceptionHandling;
@@ -9,15 +10,16 @@ public static class HttpResponseMessageExtensions
     {
         if (!response.IsSuccessStatusCode)
         {
-            if (response.Content.Headers.ContentLength > 0)
+            var apiError = await response.Content.ReadFromJsonAsync<ApiError>();
+
+            if (response.StatusCode == HttpStatusCode.Unauthorized
+                || response.StatusCode == HttpStatusCode.BadRequest
+                || response.StatusCode == HttpStatusCode.NotFound)
             {
-                var apiError = await response.Content.ReadFromJsonAsync<ApiError>();
-                throw new Exception(apiError?.Detail ?? "An error occurred while processing the request.");
+                throw new ApiException(apiError);
             }
-            else
-            {
-                throw new Exception("An error occurred while processing the request.");
-            }
+
+            throw new ApiException(apiError);
         }
     }
 }

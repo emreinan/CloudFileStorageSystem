@@ -22,7 +22,6 @@ public class LoginCommand : IRequest<LoggedResponse>
             var user = await authDb.Users.Include(u=>u.RefreshTokens).FirstOrDefaultAsync(u => u.Email == request.Login.Email);
 
             authBusinessRules.UserShouldExist(user);
-
             authBusinessRules.PasswordShouldMatch(request.Login.Password, user!);
 
             await authService.DeleteOldRefreshTokens(user!.Id);

@@ -29,7 +29,7 @@
                         <td>@file.Name</td>
                         <td>@file.Description</td>
                         <td>@file.OwnerName</td>
-                        <td>@file.SharingType</td>
+                        <td>@file.SharingType @file.PermissionLevel</td>
                         <td>
                             <a asp-action="GetFileStream" asp-controller="File" asp-route-fileName="@file.Name" class="btn btn-primary btn-sm">
                                 <i class="fas fa-download"></i> Download

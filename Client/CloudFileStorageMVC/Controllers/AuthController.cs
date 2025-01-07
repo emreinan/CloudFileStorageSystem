@@ -28,12 +28,6 @@ public class AuthController(
         var loginDto = mapper.Map<LoginDto>(loginViewModel);
         var token = await authService.LoginAsync(loginDto);
 
-        if (token == null)
-        {
-            TempData["ErrorMessage"] = "Email or password is wrong.";
-            return View(loginViewModel);
-        }
-
         tokenService.SetRefreshToken(token.RefreshToken);
         tokenService.SetAccessToken(token.AccessToken);
 
