@@ -14,6 +14,7 @@ public class ExceptionAndToastFilter(IToastNotification toastNotification
     {
         if (context.Controller is Controller controller)
         {
+
             if (controller.TempData["ErrorMessage"] != null)
             {
                 var errorMessage = controller.TempData["ErrorMessage"]!.ToString();
@@ -43,6 +44,7 @@ public class ExceptionAndToastFilter(IToastNotification toastNotification
 
         if (context.Exception is ApiException apiEx)
         {
+            var toastNotification = context.HttpContext.RequestServices.GetService<IToastNotification>();
             toastNotification?.AddErrorToastMessage($"{apiEx.ApiError.Title}: {apiEx.ApiError.Detail}");
 
             context.HttpContext.Items["ErrorTitle"] = apiEx.ApiError.Title;
