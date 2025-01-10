@@ -1,80 +1,61 @@
-<h1>📦 Bulut Dosya Depolama Sistemi</h1>
 
-<p>Basit ve etkili bir bulut dosya depolama uygulaması.</p>
+# 📦 Cloud File Storage System
 
-<h2>💻 Proje Hakkında</h2>
+A simple and effective cloud file storage application.
 
-<p>Mikroservis mimarisi ile geliştirilen Bulut Dosya Depolama Sistemi, modern yazılım geliştirme tekniklerini sergileyen kapsamlı bir projedir. Projede JWT tabanlı kimlik doğrulama, CQRS tasarım deseni, MediatR, AutoMapper, Gateway API, PostgreSQL ve SQLite gibi birçok gelişmiş teknoloji kullanılmıştır.</p>
+## 💻 About the Project
 
-<h2>🛠️ Kullanılan Teknolojiler</h2>
+Developed with a microservice architecture, the Cloud File Storage System is a comprehensive project that demonstrates modern software development techniques. The project incorporates advanced technologies such as JWT-based authentication, CQRS design pattern, MediatR, AutoMapper, Gateway API, PostgreSQL, and SQLite.
 
-<ul>
-<li><strong>.NET 8.0</strong></li>
-<li><strong>Entity Framework Core</strong> (SQLite ve PostgreSQL)</li>
-<li><strong>MediatR</strong> (CQRS uygulanması için)</li>
-<li><strong>AutoMapper</strong> (DTO ve Entity dönüşümleri için)</li>
-<li><strong>JWT (JSON Web Token)</strong> (Kimlik doğrulama ve yetkilendirme)</li>
-<li><strong>YARP (Yet Another Reverse Proxy)</strong> (Gateway API için)</li>
-<li><strong>ASP.NET Core MVC</strong> (Kullanıcı arayüzü)</li>
-</ul>
+## 🛠️ Technologies Used
 
-<h2>⚙️ Başlarken</h2>
+- **.NET 8.0**
+- **Entity Framework Core** (SQLite and PostgreSQL)
+- **MediatR** (for implementing CQRS)
+- **AutoMapper** (for DTO and Entity conversions)
+- **JWT (JSON Web Token)** (for authentication and authorization)
+- **YARP (Yet Another Reverse Proxy)** (for Gateway API)
+- **ASP.NET Core MVC** (for user interface)
 
-<p>Projeyi yerel ortamda çalıştırmak için aşağıdaki adımları izleyin.</p>
+## ⚙️ Getting Started
 
-<h3>Gereksinimler</h3>
+Follow the steps below to run the project locally.
 
-<ul>
-<li><strong>.NET 8.0</strong></li>
-<li><strong>PostgreSQL</strong></li>
-</ul>
+### Prerequisites
 
-<h3>Kurulum</h3>
+- **.NET 8.0**
+- **PostgreSQL**
 
-<ol>
-<li><p><strong>Projeyi Klonlayın:</strong>
-<code>bash
-git clone --recurse-submodules https://github.com/kullanici-adi/proje-adi.git
-cd proje-adi
-</code></p></li>
-<li><p><strong>Veritabanı Yapılandırması:</strong></p>
+### Installation
 
-<ul>
-<li><code>Package Manager Console</code> üzerinden aşağıdaki komutu çalıştırın:
-<code>bash
-Update-Database
-</code></li>
-</ul></li>
-</ol>
+1. **Clone the Repository:**
+   ```bash
+   git clone --recurse-submodules https://github.com/username/project-name.git
+   ```
 
-<h2>🤝 Katkıda Bulunma</h2>
+2. Run the `Update-Database` command with the Package Manager Console in FileMetadataAPI to create tables in the PostgreSQL server.
 
-<p>Açık kaynak topluluğunu daha iyi hale getirmek için katkılarınızı bekliyoruz!</p>
+## 🤝 Contributing
 
-<ol>
-<li>Fork alın ve yerel makinenize klonlayın.</li>
-<li>Yeni bir dal oluşturun:
-<code>bash
-git checkout -b feature/newFeature
-</code></li>
-<li>Geliştirin ve commit yapın:
-<code>bash
-git add . &amp;&amp; git commit -m 'feat(newFeature): Özellik eklendi'
-</code></li>
-<li>Dalı push edin:
-<code>bash
-git push origin feature/newFeature
-</code></li>
-<li>Pull Request oluşturun.</li>
-</ol>
+1. Fork the repository and clone it to your local machine.
 
-<h2>⚖️ Lisans</h2>
+2. Create a new branch (`git checkout -b feature/newFeature`)
 
-<p>Bu proje MIT Lisansı ile lisanslanmıştır. Daha fazla bilgi için <a href="LICENSE">LICENSE</a> dosyasını inceleyin.</p>
+3. Develop your feature.
 
-<h2>📧 İletişim</h2>
+4. Commit your changes (`git add . && git commit -m 'feat(newFeature): Added new feature'`)
 
-<p>Herhangi bir sorunuz veya öneriniz için benimle iletişime geçin:</p>
+5. Push the branch (`git push origin feature/newFeature`)
 
-<p>📩 E-posta: emreinannn@gmail.com</p>
+6. Open a Pull Request.
 
+
+## ⚖️ License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
+
+## 📧 Contact
+
+For any questions or suggestions, feel free to reach out to me:
+
+📩 Email: emreinannn@gmail.com
