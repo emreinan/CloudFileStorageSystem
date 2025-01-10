@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.StaticFiles;
 
 namespace FileStorageAPI.Application.Features.Commands.Download;
 
@@ -34,18 +35,12 @@ public class DownloadFileCommand : IRequest<DownloadFileResult>
 
         private static string GetContentType(string path)
         {
-            var types = new Dictionary<string, string>
-        {
-            { ".jpg", "image/jpeg" },
-            { ".jpeg", "image/jpeg" },
-            { ".png", "image/png" },
-            { ".gif", "image/gif" },
-            {".txt", "text/plain"},
-            {".pdf", "application/pdf"}
-        };
-
-            var ext = Path.GetExtension(path).ToLowerInvariant();
-            return types.ContainsKey(ext) ? types[ext] : "application/octet-stream";
+            var provider = new FileExtensionContentTypeProvider();
+            if (!provider.TryGetContentType(path, out var contentType))
+            {
+                contentType = "application/octet-stream";
+            }
+            return contentType;
         }
     }
 }

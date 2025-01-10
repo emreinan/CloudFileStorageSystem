@@ -10,16 +10,8 @@ public static class HttpResponseMessageExtensions
     {
         if (!response.IsSuccessStatusCode)
         {
-            var apiError = await response.Content.ReadFromJsonAsync<ApiError>();
-
-            if (response.StatusCode == HttpStatusCode.Unauthorized
-                || response.StatusCode == HttpStatusCode.BadRequest
-                || response.StatusCode == HttpStatusCode.NotFound)
-            {
-                throw new ApiException(apiError);
-            }
-
-            throw new ApiException(apiError);
+            var apiError = await response.Content.ReadFromJsonAsync<ApiError>()
+                ?? throw new InvalidOperationException("Failed to read the API error response.");
         }
     }
 }
